@@ -3,7 +3,7 @@
 int main(int ac, char **av)
 {
     if(ac == 2)
-        cub3d();
+        cub3d(av[1]);
     else
     {
         printf("Invalid arguments\n");
