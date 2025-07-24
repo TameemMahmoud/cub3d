@@ -30,14 +30,12 @@ int	countfunction(int n)
 char	*ft_itoa(int n)
 {
 	int		count;
-	int		sign;
 	char	*result;
 
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
 	else if (n == 0)
 		return (ft_strdup("0"));
-	sign = 1;
 	count = countfunction(n);
 	result = malloc(sizeof(char) * (count + 1));
 	if (!result)

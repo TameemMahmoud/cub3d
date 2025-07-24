@@ -1,4 +1,4 @@
-#include "includes/cub3d.h"
+#include "../includes/cub3d.h"
 
 
 static void    init_malloc(t_src *src)
@@ -10,5 +10,7 @@ static void    init_malloc(t_src *src)
 
 void init(t_src *src, char *file)
 {
+    (void) *file;
+    init_malloc(src);
     
 }

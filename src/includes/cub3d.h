@@ -9,7 +9,7 @@
 // ---------- const strings--------------
 
 # define INVALID_FILE_NAME "Error\nInvalid file, kindly check the file name.\n"
-
+# define INVALID_EXTENSION "Eroor\nInvalid file extention.\n"
 
 typedef struct s_file
 {
@@ -41,6 +41,7 @@ typedef struct s_src
     t_map       *map;
 }               t_src;
 
-void cub3d(char *file);
-void init(t_src *src, char *file);
+void	cub3d(char *file);
+void	init(t_src *src, char *file);
+void	parsing(t_src *src, char *input_file);
 #endif
