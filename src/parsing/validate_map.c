@@ -1,8 +1,5 @@
-// Add this to your parsing.c file
-
 #include "../includes/cub3d.h"
 
-// Add this to your parsing.c file
 
 static int	is_texture_identifier(char *line)
 {

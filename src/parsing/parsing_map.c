@@ -1,5 +1,3 @@
-// Add this to your parsing.c file
-
 #include "../includes/cub3d.h"
 
 static int	is_valid_map_char(char c)
