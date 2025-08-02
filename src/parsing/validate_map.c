@@ -179,19 +179,6 @@ static void	parse_color(t_src *src, char *line)
 	free_split(rgb_values);
 }
 
-static int	is_empty_line(char *line)
-{
-	if (!line)
-		return (1);
-	while (*line)
-	{
-		if (*line != ' ' && *line != '\t' && *line != '\n')
-			return (0);
-		line++;
-	}
-	return (1);
-}
-
 static void	validate_config_elements(t_src *src)
 {
 	if (!src->textures.north || !src->textures.south ||
@@ -237,7 +224,6 @@ void	parse_config_elements(t_src *src)
 	src->file.map_start_index = i;
 }
 
-// Temporary debugging version - add this to your parsing.c
 void debug_parse_config_elements(t_src *src)
 {
     int i = 0;
@@ -246,7 +232,6 @@ void debug_parse_config_elements(t_src *src)
     printf("=== DEBUG: File contents ===\n");
     printf("Total file length: %d\n", src->file.file_len);
     
-    // Print all lines first
     while (i < src->file.file_len)
     {
         printf("Line %d: '%s'\n", i, src->file.file_map[i] ? src->file.file_map[i] : "NULL");

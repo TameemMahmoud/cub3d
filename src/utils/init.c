@@ -2,8 +2,8 @@
 
 static void init_structs(t_src *src, t_file *file)
 {
-    t_map       *map;
-    map = src->map;
+    // t_map       *map;
+    // map = src->map;
     file->file_len = 0;
     src->textures.north = NULL;
     src->textures.south = NULL;

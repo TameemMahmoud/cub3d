@@ -24,21 +24,19 @@ typedef struct s_colors {
     int floor_set, ceiling_set;
 } t_colors;
 
-// ✅ Add this struct
 typedef struct s_file {
     char    **file_map;
     int     file_len;
     int     map_start_index;
 } t_file;
 
-// ✅ Add this struct (we'll expand it later)
 typedef struct s_map {
     char    **grid;
     int     width;
     int     height;
     int     player_x;
     int     player_y;
-    char    player_dir;  // N, S, E, W
+    char    player_dir;
 } t_map;
 
 typedef struct s_src
@@ -47,8 +45,8 @@ typedef struct s_src
     void        *win_ptr;
     t_file      file;
     t_map       *map;
-    t_textures  textures;   // ✅ Add this
-    t_colors    colors;     // ✅ Add this
+    t_textures  textures;
+    t_colors    colors;
 } t_src;
 
 // Function prototypes
@@ -60,5 +58,6 @@ void	debug_parse_config_elements(t_src *src);
 void    open_file(t_src *src, t_file *file, char *input_file);
 void    exit_failure_clear(t_src *src, char *err_msg);
 void    exit_failure(char *err_msg);
-
+void	parse_map(t_src *src);
+int		is_empty_line(char *line);
 #endif
