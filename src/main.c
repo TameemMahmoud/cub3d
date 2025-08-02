@@ -5,9 +5,6 @@ int main(int ac, char **av)
     if(ac == 2)
         cub3d(av[1]);
     else
-    {
-        printf("Invalid arguments\n");
-        exit(EXIT_FAILURE);
-    }
+        exit_failure("Invalid arguments");
     return (0);
 }

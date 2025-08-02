@@ -1,0 +1,6 @@
+check the the first 4 lines:
+include two words the first si two characters and the second is the path
+empty line
+two lines include two words the first is (F or C) and the second is the path
+
+then the map

@@ -10,8 +10,12 @@ MLX_DIR = src/includes/mlx
 MLX_LIB = $(MLX_DIR)/libmlx.a
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
+GNL_DIR = src/includes/get_next_line
+GNL_FILES = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
+GNL_OBJS = $(GNL_FILES:.c=.o)
+
 SRC_MAIN = src/main.c
-SRC = src/cub3d.c  src/utils/init.c 
+SRC = src/cub3d.c src/utils/init.c src/utils/exit.c src/parsing/parsing.c src/parsing/open_file.c src/parsing/validate_map.c
 
 OBJS = $(SRC:.c=.o)
 OBJS_MAIN = $(SRC_MAIN:.c=.o)
@@ -24,11 +28,11 @@ $(LIBFT_LIB):
 $(MLX_LIB):
 	make -C $(MLX_DIR)
 
-$(NAME): $(LIBFT_LIB) $(MLX_LIB) $(OBJS) $(OBJS_MAIN)
-	$(CC) $(CFLAGS) $(OBJS) $(OBJS_MAIN) $(LIBFT_LIB) $(MLX_FLAGS) -o $(NAME)
+$(NAME): $(LIBFT_LIB) $(MLX_LIB) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS) $(LIBFT_LIB) $(MLX_FLAGS) -o $(NAME)
 
-%.o: %.c $(LIBFT_LIB)
-	$(CC) $(CFLAGS) -Imlx_mac -Isrc/includes/libft -c $< -o $@
+%.o: %.c
+	$(CC) $(CFLAGS) -Imlx_mac -Isrc/includes/libft -Isrc/includes/get_next_line -c $< -o $@
 
 clean_libft:
 	make clean -C $(LIBFT_DIR)
@@ -37,7 +41,7 @@ clean_mlx:
 	make clean -C $(MLX_DIR)
 
 clean: clean_libft clean_mlx
-	rm -f $(OBJS) $(OBJS_MAIN)
+	rm -f $(OBJS) $(OBJS_MAIN) $(GNL_OBJS)
 
 fclean: clean
 	make fclean -C $(LIBFT_DIR)

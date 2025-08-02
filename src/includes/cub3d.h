@@ -1,47 +1,64 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 # include "libft/libft.h"
+# include "get_next_line/get_next_line.h"
 # include <stdio.h>
 # include "mlx/mlx.h"
 # include <math.h>
 
-
 // ---------- const strings--------------
-
 # define INVALID_FILE_NAME "Error\nInvalid file, kindly check the file name.\n"
-# define INVALID_EXTENSION "Eroor\nInvalid file extention.\n"
+# define INVALID_EXTENSION "Error\nInvalid file extention.\n"
+# define INVALID_FD "Error\nINVALID_FD"
 
-typedef struct s_file
-{
-	char		**file_arr;
-	int			filepath_len;
-	int			stage;
-	int			file_len;
-}				t_file;
+typedef struct s_textures {
+    char *north;
+    char *south;
+    char *west;
+    char *east;
+} t_textures;
 
-typedef struct s_map
-{
-	char		**map_arr;
-	int			map_width;
-	int			map_height;
-	int			map_st;
-	int			map_end;
-	int			wall_counter;
-	int			p_counter;
-	int			p_x;
-	int			p_y;
-	char		p_direction;
-}				t_map;
+typedef struct s_colors {
+    int floor_r, floor_g, floor_b;
+    int ceiling_r, ceiling_g, ceiling_b;
+    int floor_set, ceiling_set;
+} t_colors;
+
+// ✅ Add this struct
+typedef struct s_file {
+    char    **file_map;
+    int     file_len;
+    int     map_start_index;
+} t_file;
+
+// ✅ Add this struct (we'll expand it later)
+typedef struct s_map {
+    char    **grid;
+    int     width;
+    int     height;
+    int     player_x;
+    int     player_y;
+    char    player_dir;  // N, S, E, W
+} t_map;
 
 typedef struct s_src
 {
-    void		*mlx_ptr;
-	void		*win_ptr;
+    void        *mlx_ptr;
+    void        *win_ptr;
     t_file      file;
     t_map       *map;
-}               t_src;
+    t_textures  textures;   // ✅ Add this
+    t_colors    colors;     // ✅ Add this
+} t_src;
 
-void	cub3d(char *file);
-void	init(t_src *src, char *file);
-void	parsing(t_src *src, char *input_file);
+// Function prototypes
+void    cub3d(char *file);
+void    init(t_src *src, char *file);
+void    parsing(t_src *src, char *input_file);
+void    parse_config_elements(t_src *src);
+void	debug_parse_config_elements(t_src *src);
+void    open_file(t_src *src, t_file *file, char *input_file);
+void    exit_failure_clear(t_src *src, char *err_msg);
+void    exit_failure(char *err_msg);
+
 #endif
