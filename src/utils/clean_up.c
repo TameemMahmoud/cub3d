@@ -1,4 +1,3 @@
-// Add this to a cleanup.c file or to your existing source file
 
 #include "../includes/cub3d.h"
 
