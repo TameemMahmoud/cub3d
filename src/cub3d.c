@@ -12,7 +12,7 @@ void cub3d(char *file)
         printf(INVALID_EXTENSION);
         exit(EXIT_FAILURE);
     }
-    init(&src, file);
+    init(&src);
     parsing(&src, file);
 }
 

@@ -73,20 +73,20 @@ static void	free_map(t_map *map)
 	free(map);
 }
 
-static void	cleanup_mlx(t_src *src)
-{
-	if (src->win_ptr)
-	{
-		mlx_destroy_window(src->mlx_ptr, src->win_ptr);
-		src->win_ptr = NULL;
-	}
-	if (src->mlx_ptr)
-	{
-		mlx_destroy_display(src->mlx_ptr);
-		free(src->mlx_ptr);
-		src->mlx_ptr = NULL;
-	}
-}
+// static void	cleanup_mlx(t_src *src)
+// {
+// 	if (src->win_ptr)
+// 	{
+// 		mlx_destroy_window(src->mlx_ptr, src->win_ptr);
+// 		src->win_ptr = NULL;
+// 	}
+// 	if (src->mlx_ptr)
+// 	{
+// 		mlx_destroy_display(src->mlx_ptr);
+// 		free(src->mlx_ptr);
+// 		src->mlx_ptr = NULL;
+// 	}
+// }
 
 void	cleanup_all(t_src *src)
 {
@@ -96,7 +96,7 @@ void	cleanup_all(t_src *src)
 	free_file_map(&src->file);
 	free_map(src->map);
 	src->map = NULL;
-	cleanup_mlx(src);
+	// cleanup_mlx(src);
 }
 
 void	exit_failure_clear(t_src *src, char *err_msg)
@@ -110,4 +110,11 @@ void	exit_success_clear(t_src *src)
 {
 	cleanup_all(src);
 	exit(0);
+}
+
+void	exit_failure(char *err_msg)
+{
+	if (*err_msg)
+		printf("%s\n", err_msg);
+	exit(EXIT_FAILURE);
 }

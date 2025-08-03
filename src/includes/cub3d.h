@@ -51,13 +51,13 @@ typedef struct s_src
 
 // Function prototypes
 void    cub3d(char *file);
-void    init(t_src *src, char *file);
+void    init(t_src *src);
 void    parsing(t_src *src, char *input_file);
 void    parse_config_elements(t_src *src);
-void	debug_parse_config_elements(t_src *src);
-void    open_file(t_src *src, t_file *file, char *input_file);
 void    exit_failure_clear(t_src *src, char *err_msg);
 void    exit_failure(char *err_msg);
+void	exit_success_clear(t_src *src);
+void	cleanup_all(t_src *src);
 void	parse_map(t_src *src);
 int		is_empty_line(char *line);
 #endif
