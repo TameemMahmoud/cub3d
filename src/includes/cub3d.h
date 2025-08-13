@@ -3,6 +3,8 @@
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
 # include <stdio.h>
+# include <stdlib.h>
+# include <stdbool.h>
 # include "mlx/mlx.h"
 # include <math.h>
 
@@ -12,41 +14,41 @@
 # define INVALID_FD "Error\nINVALID_FD"
 
 typedef struct s_textures {
-    char *north;
-    char *south;
-    char *west;
-    char *east;
+	char *north;
+	char *south;
+	char *west;
+	char *east;
 } t_textures;
 
 typedef struct s_colors {
-    int floor_r, floor_g, floor_b;
-    int ceiling_r, ceiling_g, ceiling_b;
-    int floor_set, ceiling_set;
+	int floor_r, floor_g, floor_b;
+	int ceiling_r, ceiling_g, ceiling_b;
+	int floor_set, ceiling_set;
 } t_colors;
 
 typedef struct s_file {
-    char    **file_map;
-    int     file_len;
-    int     map_start_index;
+	char    **file_map;
+	int     file_len;
+	int     map_start_index;
 } t_file;
 
 typedef struct s_map {
-    char    **grid;
-    int     width;
-    int     height;
-    int     player_x;
-    int     player_y;
-    char    player_dir;
+	char    **grid;
+	int     width;
+	int     height;
+	int     player_x;
+	int     player_y;
+	char    player_dir;
 } t_map;
 
 typedef struct s_src
 {
-    void        *mlx_ptr;
-    void        *win_ptr;
-    t_file      file;
-    t_map       *map;
-    t_textures  textures;
-    t_colors    colors;
+	void        *mlx_ptr;
+	void        *win_ptr;
+	t_file      file;
+	t_map       *map;
+	t_textures  textures;
+	t_colors    colors;
 } t_src;
 
 // Function prototypes

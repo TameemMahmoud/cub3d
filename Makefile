@@ -9,6 +9,7 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 MLX_DIR = src/includes/mlx
 MLX_LIB = $(MLX_DIR)/libmlx.a
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+FSANATIZE_FLAGS = -fsanitize=address -g
 
 GNL_DIR = src/includes/get_next_line
 GNL_FILES = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
@@ -16,7 +17,7 @@ GNL_OBJS = $(GNL_FILES:.c=.o)
 
 SRC_MAIN = src/main.c
 SRC = src/cub3d.c src/utils/init.c src/utils/clean_and_exit.c src/parsing/parsing.c src/parsing/validate_map.c \
-	src/parsing/parsing_map.c src/utils/is_empty_line.c
+	src/parsing/parsing_map.c src/utils/is_empty_line.c src/execution/execution.c src/execution/player.c \
 
 OBJS = $(SRC:.c=.o)
 OBJS_MAIN = $(SRC_MAIN:.c=.o)
@@ -33,7 +34,7 @@ $(NAME): $(LIBFT_LIB) $(MLX_LIB) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS) $(LIBFT_LIB) $(MLX_FLAGS) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -Imlx_mac -Isrc/includes/libft -Isrc/includes/get_next_line -c $< -o $@
+	$(CC) $(CFLAGS) -Imlx_mac -Isrc/includes -Isrc/includes/libft -Isrc/includes/get_next_line -c $< -o $@
 
 clean_libft:
 	make clean -C $(LIBFT_DIR)
@@ -50,5 +51,8 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+fsanitize: CFLAGS += $(FSANATIZE_FLAGS)
+fsanitize: re
 
 .PHONY: all clean fclean re clean_libft clean_mlx

@@ -1,4 +1,5 @@
-#include "includes/cub3d.h"
+#include "cub3d.h"
+#include "execution.h"
 #include "includes/libft/libft.h"
 
 void cub3d(char *file)
@@ -14,6 +15,7 @@ void cub3d(char *file)
     }
     init(&src);
     parsing(&src, file);
+    execution(&src);
 }
 
 //ft_strncmp(const char *s1, const char *s2, size_t n)
