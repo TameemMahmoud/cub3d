@@ -8,13 +8,13 @@
 #define PLAYER_SPEED 5
 
 
-#define W 119
-#define A 97
-#define S 115
-#define D 100
+#define W 13
+#define A 0
+#define S 1
+#define D 2
 
 #define PI 3.14159265358979323846
-#define ESC 65307
+#define ESC 53
 
 
 typedef struct player
@@ -39,12 +39,14 @@ typedef struct execution
 	int line_length;
 	int endian;
 	t_player player;
+
+	char **map;
 } t_execution;
 
 
 
 void	execution(t_src *src);
-void	init_cub3d(t_execution *cub3d);
+void	init_cub3d(t_execution *cub3d, t_src *src);
 void	exit_failure(char *err_msg);
 
 void	init_player(t_player *player);

@@ -25,8 +25,9 @@ void draw_square(int x, int y, t_execution *execution, int size, int color)
     }
 }
 
-void init_cub3d(t_execution *cub3d)
+void init_cub3d(t_execution *cub3d, t_src *src)
 {
+	cub3d->map = src->map->grid;
 	cub3d->mlx = mlx_init();
 	if (!cub3d->mlx)
 			exit_failure("Error initializing MLX");
@@ -41,24 +42,34 @@ void init_cub3d(t_execution *cub3d)
 		exit_failure("Error getting image data address");
 	mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img, 0, 0);
 }
+void clear_image(t_execution *execution)
+{
+	int i;
 
+	// Clear the image buffer
+	for (i = 0; i < WIDTH * HEIGHT; i++)
+		((int *)execution->pixels_ptr)[i] = 0x000000; // Set all pixels to black
+}
 int draw_a_loop(t_execution *execution)
 {
+
+	clear_image(execution);		
 	t_player *player = &execution->player;
-	player_movement(player); // Update player position based on key presses
-	draw_square(player->x, player->y, execution, 5, 0x00FF00); // Draw player as a green square
+	player_movement(player);
+	draw_square(player->x, player->y, execution, 5, 0x00FF00);
 	mlx_put_image_to_window(execution->mlx, execution->win, execution->img, 0, 0);
 	return (0);
 }
+
 void execution(t_src *src)
 {
-	(void)src; // src is not used in this function, but can be used for future enhancements
 	t_execution cub3d;
 
-	init_cub3d(&cub3d);
+	init_cub3d(&cub3d, src);
+	init_player(&cub3d.player); // Initialize player position and keys
 
 	mlx_hook(cub3d.win, 2, 1L<<0, key_press, &cub3d.player);
 	mlx_hook(cub3d.win, 3, 1L<<1, key_release, &cub3d.player);	
-	mlx_loop_hook(cub3d.mlx, draw_a_loop, &cub3d.player);
+	mlx_loop_hook(cub3d.mlx, draw_a_loop, &cub3d);
 	mlx_loop(cub3d.mlx);
 }
