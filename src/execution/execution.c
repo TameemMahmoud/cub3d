@@ -16,12 +16,17 @@ void draw_square(int x, int y, t_execution *execution, int size, int color)
     int i;
     int j;
 
-    for (i = 0; i < size; i++)
+	i = 0;
+	j = 0;
+    while (i < size)
     {
-        for (j = 0; j < size; j++)
+		j = 0;
+        while(j < size)
         {
             my_mlx_pixel_put(x + j, y + i, execution, color);
-        }
+			j++;
+		}
+		i++;
     }
 }
 
@@ -42,6 +47,30 @@ void init_cub3d(t_execution *cub3d, t_src *src)
 		exit_failure("Error getting image data address");
 	mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img, 0, 0);
 }
+
+void draw_map(t_execution *execution)
+{
+	char **map;
+	int color;
+
+	map = execution->map;
+	color = 0xFFFFFF; // Default color for the map
+	for (int y = 0; map[y]; y++)
+	{
+		for (int x = 0; map[y][x]; x++)
+		{
+			if (map[y][x] == '1') // Wall
+				draw_square(x * BLOCK_SIZE, y * BLOCK_SIZE, execution, BLOCK_SIZE, color); // White for walls
+			// else if (map[y][x] == '0') // Empty space
+			// 	color = 0x000000; // Black for empty spaces
+			// else if (map[y][x] == 'P') // Player position
+			// 	color = 0x00FF00; // Green for player
+
+			// my_mlx_pixel_put(x, y, execution, color);
+		}
+	}
+	// mlx_put_image_to_window(execution->mlx, execution->win, execution->img, 0, 0);
+}
 void clear_image(t_execution *execution)
 {
 	int i;
@@ -50,13 +79,37 @@ void clear_image(t_execution *execution)
 	for (i = 0; i < WIDTH * HEIGHT; i++)
 		((int *)execution->pixels_ptr)[i] = 0x000000; // Set all pixels to black
 }
+
+bool touch(float px, float py,t_execution *execution)
+{
+	int x = (px / BLOCK_SIZE);
+	int y = (py / BLOCK_SIZE);
+
+	if (execution->map[y][x] == '1') // Assuming '1' represents a wall
+		return true; // Touching a wall
+
+	return false; // Not touching a wall
+}
 int draw_a_loop(t_execution *execution)
 {
 
 	clear_image(execution);		
 	t_player *player = &execution->player;
 	player_movement(player);
-	draw_square(player->x, player->y, execution, 5, 0x00FF00);
+	draw_square(player->x, player->y, execution, PLAYER_SIZE, 0x00FF00);
+	draw_map(execution);
+
+	float ray_x = player->x;
+	float ray_y = player->y;
+	float ray_sin_angle = sin(player->angle);
+	float ray_cos_angle = cos(player->angle);
+
+	while (!touch(ray_x, ray_y, execution))
+	{
+		my_mlx_pixel_put(ray_x, ray_y, execution, 0xFF0000); // Draw the ray in red
+		ray_x += ray_cos_angle;
+		ray_y -= ray_sin_angle; // Subtract because y-axis is inverted in most graphics libraries
+	}
 	mlx_put_image_to_window(execution->mlx, execution->win, execution->img, 0, 0);
 	return (0);
 }

@@ -4,10 +4,17 @@ void init_player(t_player *player)
 {
     player->x = WIDTH / 2; // Start in the middle of the screen
     player->y = HEIGHT / 2; // Start in the middle of the screen
+    
+    player->angle = PI / 2; // Facing upwards (90 degrees in radians)
+    
+    
     player->key_up = false;
     player->key_down = false;
     player->key_left = false;
     player->key_right = false;
+
+    player->key_rotate_left = false;
+    player->key_rotate_right = false;
 }
 
 int key_press(int keycode, t_player *player)
@@ -21,6 +28,16 @@ int key_press(int keycode, t_player *player)
         player->key_left = true;
     else if(keycode == D)
         player->key_right = true;
+    else if(keycode == LEFT)
+    {
+        player->key_rotate_left = true;
+        printf("Rotating left\n"); // Debug output
+    }
+    else if(keycode == RIGHT)
+    {
+        player->key_rotate_right = true;
+        printf("Rotating right\n"); // Debug output
+    }
     else if(keycode == ESC)
     {
         printf("Exiting game...\n"); // Debug output
@@ -42,17 +59,47 @@ int key_release(int keycode, t_player *player)
         player->key_left = false;
     else if(keycode == D)
         player->key_right = false;
+    else if(keycode == LEFT)
+        player->key_rotate_left = false;
+    else if(keycode == RIGHT)
+        player->key_rotate_right = false;
     return (0);
 }
 
 void player_movement(t_player *player)
 {
+    player->cos_angle = cos(player->angle);
+    player->sin_angle = sin(player->angle);
+
+    
+    if (player->key_rotate_left)
+        player->angle -= ANGLE_SPEED;
+    if (player->key_rotate_right)
+        player->angle += ANGLE_SPEED;
+    if (player->angle > 2 * PI)
+        player->angle = 0;
+    if (player->angle < 0)
+        player->angle = 2 * PI; 
+    
+    // Move the player based on key presses
     if (player->key_up)
-        player->y -= PLAYER_SPEED; //up
+    {
+        player->x += player->cos_angle * PLAYER_SPEED;
+        player->y -= player->sin_angle * PLAYER_SPEED;
+    }
     if (player->key_down)
-        player->y += PLAYER_SPEED; //down
+    {
+        player->x -= player->cos_angle * PLAYER_SPEED;
+        player->y += player->sin_angle * PLAYER_SPEED;
+    }
     if (player->key_left)
-        player->x -= PLAYER_SPEED; //left
+    {
+        player->x -= player->sin_angle * PLAYER_SPEED;
+        player->y += player->cos_angle * PLAYER_SPEED;
+    }
     if (player->key_right)
-        player->x += PLAYER_SPEED; //right
+    {
+        player->x += player->sin_angle * PLAYER_SPEED;
+        player->y -= player->cos_angle * PLAYER_SPEED;
+    }
 }

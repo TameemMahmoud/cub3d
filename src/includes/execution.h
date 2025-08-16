@@ -6,12 +6,26 @@
 #define WIDTH 1280
 #define HEIGHT 720
 #define PLAYER_SPEED 5
+#define BLOCK_SIZE 20
+#define PLAYER_SIZE 10
+#define ANGLE_SPEED 0.1
 
-
+/*
+Player Movement Keys
+*/
 #define W 13
 #define A 0
 #define S 1
 #define D 2
+
+/*
+Player Rotation Keys
+*/
+#define LEFT 123
+#define RIGHT 124
+#define UP 126
+#define DOWN 125
+
 
 #define PI 3.14159265358979323846
 #define ESC 53
@@ -22,10 +36,17 @@ typedef struct player
 	// t_execution *execution;
 	float x;
 	float y;
+	float angle; // Player's direction in radians
+	float cos_angle; // Cosine of the angle for movement calculations
+	float sin_angle; // Sine of the angle for movement calculations
+
 	bool key_up;
 	bool key_down;
 	bool key_left;
 	bool key_right;
+
+	bool key_rotate_left;
+	bool key_rotate_right;
 } t_player;
 
 typedef struct execution

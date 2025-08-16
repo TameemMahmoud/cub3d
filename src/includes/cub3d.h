@@ -6,6 +6,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include "mlx/mlx.h"
+# include <string.h>
 # include <math.h>
 
 // ---------- const strings--------------
