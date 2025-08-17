@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_up.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/03 19:30:35 by tmahmoud          #+#    #+#             */
+/*   Updated: 2025/08/11 14:00:16 by tmahmoud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
@@ -96,25 +107,8 @@ void	cleanup_all(t_src *src)
 	free_file_map(&src->file);
 	free_map(src->map);
 	src->map = NULL;
-	// cleanup_mlx(src);
 }
 
-void	exit_failure_clear(t_src *src, char *err_msg)
-{
-	cleanup_all(src);
-	ft_putendl_fd(err_msg, 2);
-	exit(1);
-}
-
-void	exit_success_clear(t_src *src)
-{
-	cleanup_all(src);
-	exit(0);
-}
-
-void	exit_failure(char *err_msg)
-{
-	if (*err_msg)
-		printf("%s\n", err_msg);
-	exit(EXIT_FAILURE);
-}
+/*
+in clean up function call cleanup_mlx at the end of the function
+*/
