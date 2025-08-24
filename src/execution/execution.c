@@ -89,7 +89,10 @@ bool touch(float px, float py,t_execution *execution)
 		return true;
 	return false;
 }
-
+float distance(float x, float y)
+{
+	return sqrt(x * x + y * y);
+}
 void draw_line(t_player *player, t_execution *execution, float x, int i)
 {
 	float cos_angle = cos(x);
@@ -99,9 +102,19 @@ void draw_line(t_player *player, t_execution *execution, float x, int i)
 	(void)i;
 	while(!touch(ray_x, ray_y, execution))
 	{
-		my_mlx_pixel_put(ray_x, ray_y, execution, 0xFF0000); // Draw the ray in red
+		// my_mlx_pixel_put(ray_x, ray_y, execution, 0xFF0000); // Draw the ray in red
 		ray_x += cos_angle;
 		ray_y += sin_angle; // Subtract because y-axis is inverted in most graphics libraries
+	}
+
+	float dist = distance(ray_x - player->x, ray_y - player->y);
+	float height = (BLOCK_SIZE / dist) * (WIDTH / 2);
+	int start_y = (HEIGHT- height) / 2;
+	int end_y = start_y + height;
+	while(start_y < end_y)
+	{
+		my_mlx_pixel_put(i, start_y, execution, 255); // Draw the ray in red
+		start_y++; // Add this line!
 	}
 }
 int draw_a_loop(t_execution *execution)
@@ -110,8 +123,8 @@ int draw_a_loop(t_execution *execution)
 	clear_image(execution);		
 	t_player *player = &execution->player;
 	player_movement(player);
-	draw_square(player->x, player->y, execution, PLAYER_SIZE, 0x00FF00);
-	draw_map(execution);
+	// draw_square(player->x, player->y, execution, PLAYER_SIZE, 0x00FF00);
+	// draw_map(execution);
 
 	float fraction = PI / 3 / WIDTH;
 	float start_x = player->angle - (PI / 6);

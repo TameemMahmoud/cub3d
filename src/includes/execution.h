@@ -5,10 +5,10 @@
 
 #define WIDTH 1280
 #define HEIGHT 720
-#define PLAYER_SPEED 5
+#define PLAYER_SPEED 3
 #define BLOCK_SIZE 20
 #define PLAYER_SIZE 10
-#define ANGLE_SPEED 0.1
+#define ANGLE_SPEED 0.03
 
 /*
 Player Movement Keys
