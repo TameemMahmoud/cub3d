@@ -1,20 +1,35 @@
 #include "execution.h"
 
-void init_player(t_player *player)
+void init_player_keys(t_player *player)
 {
-    player->x = WIDTH / 2; // Start in the middle of the screen
-    player->y = HEIGHT / 2; // Start in the middle of the screen
-    
-    player->angle = PI / 2; // Facing upwards (90 degrees in radians)
-    
-    
     player->key_up = false;
     player->key_down = false;
     player->key_left = false;
     player->key_right = false;
-
     player->key_rotate_left = false;
     player->key_rotate_right = false;
+}
+
+void ft_init_player(t_player *player, t_src *src)
+{
+    player->x = src->map->player_x * BLOCK_SIZE + BLOCK_SIZE / 2;
+    player->y = src->map->player_y * BLOCK_SIZE + BLOCK_SIZE / 2;
+    
+    if (src->map->player_dir == 'N')
+        player->angle = 3 * PI / 2;  // Facing North (up)
+    else if (src->map->player_dir == 'S')
+        player->angle = PI / 2;      // Facing South (down)
+    else if (src->map->player_dir == 'E')
+        player->angle = 0;           // Facing East (right)
+    else if (src->map->player_dir == 'W')
+        player->angle = PI;          // Facing West (left)
+    
+    printf("Player initialized at grid (%d,%d) facing '%c'\n", 
+           src->map->player_x, src->map->player_y, src->map->player_dir);
+    printf("Pixel position: (%.1f, %.1f), angle: %.2f\n", 
+           player->x, player->y, player->angle);
+    
+    init_player_keys(player);
 }
 
 int key_press(int keycode, t_player *player)
@@ -84,21 +99,21 @@ void player_movement(t_player *player)
     if (player->key_up)
     {
         player->x += player->cos_angle * PLAYER_SPEED;
-        player->y -= player->sin_angle * PLAYER_SPEED;
+        player->y += player->sin_angle * PLAYER_SPEED;
     }
     if (player->key_down)
     {
         player->x -= player->cos_angle * PLAYER_SPEED;
-        player->y += player->sin_angle * PLAYER_SPEED;
+        player->y -= player->sin_angle * PLAYER_SPEED;
     }
     if (player->key_left)
     {
-        player->x -= player->sin_angle * PLAYER_SPEED;
-        player->y += player->cos_angle * PLAYER_SPEED;
+        player->x += player->sin_angle * PLAYER_SPEED;
+        player->y -= player->cos_angle * PLAYER_SPEED;
     }
     if (player->key_right)
     {
-        player->x += player->sin_angle * PLAYER_SPEED;
-        player->y -= player->cos_angle * PLAYER_SPEED;
+        player->x -= player->sin_angle * PLAYER_SPEED;
+        player->y += player->cos_angle * PLAYER_SPEED;
     }
 }

@@ -3,10 +3,10 @@
 
 #include "cub3d.h"
 
-#define WIDTH 800
-#define HEIGHT 800
+#define WIDTH 1280
+#define HEIGHT 720
 #define PLAYER_SPEED 3
-#define BLOCK_SIZE 20
+#define BLOCK_SIZE 64
 #define PLAYER_SIZE 10
 #define ANGLE_SPEED 0.03
 
@@ -73,7 +73,7 @@ bool	touch(float px, float py, t_execution *execution);
 void	clear_image(t_execution *execution);
 
 //ft_player.c
-void	init_player(t_player *player, t_execution *execution);
+void	ft_init_player(t_player *player, t_src *src);
 int		key_release(int keycode, t_player *player);
 int		key_press(int keycode, t_player *player);
 void	player_movement(t_player *player);

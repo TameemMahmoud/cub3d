@@ -4,16 +4,9 @@
 void clear_image(t_execution *execution)
 {
     int i;
-    int ceiling_color = 0x87CEEB; // Sky blue
-    int floor_color = 0x8B4513;  // Saddle brown
     
-    // Fill top half (ceiling)
-    for (i = 0; i < (WIDTH * HEIGHT / 2); i++)
-        ((int *)execution->pixels_ptr)[i] = ceiling_color;
-    
-    // Fill bottom half (floor)
-    for (i = (WIDTH * HEIGHT / 2); i < (WIDTH * HEIGHT); i++)
-        ((int *)execution->pixels_ptr)[i] = floor_color;
+    for (i = 0; i < (WIDTH * HEIGHT); i++)
+        ((int *)execution->pixels_ptr)[i] = 0x000000; // Black
 }
 
 bool touch(float px, float py, t_execution *execution)
@@ -31,9 +24,11 @@ bool touch(float px, float py, t_execution *execution)
     if (execution->map[y][x] == '\0')
         return true;
 
+    // Wall character
     if (execution->map[y][x] == '1')
         return true;
     
+    // All other characters (0, N, S, E, W) are walkable
     return false;
 }
 
@@ -47,7 +42,7 @@ void execution(t_src *src)
 	t_execution cub3d;
 
 	ft_init_cub3d(&cub3d, src);
-	init_player(&cub3d.player, &cub3d);
+    ft_init_player(&cub3d.player, src);
 	mlx_hook(cub3d.win, 2, 1L<<0, key_press, &cub3d.player);
 	mlx_hook(cub3d.win, 3, 1L<<1, key_release, &cub3d.player);	
 	mlx_loop_hook(cub3d.mlx, draw_a_loop, &cub3d);

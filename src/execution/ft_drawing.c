@@ -1,6 +1,20 @@
 #include "execution.h"
 #include "cub3d.h"
 
+float fixed_dist(float x1, float y1, float x2, float y2, t_execution *game)
+{
+    float delta_x;
+    float delta_y;
+    float angle;
+    float fix_dist;
+    
+    delta_x = x2 - x1;
+    delta_y = y2 - y1;
+    angle = atan2(delta_y, delta_x) - game->player.angle;
+    fix_dist = distance(delta_x, delta_y) * cos(angle);
+    return fix_dist;
+}
+
 void draw_square(int x, int y, t_execution *execution, int size, int color)
 {
     int i;
@@ -44,6 +58,42 @@ void draw_map(t_execution *execution)
         y++;
     }
 }
+void draw_line(t_player *player, t_execution *execution, float x, int i)
+{
+    float cos_angle;
+    float sin_angle;
+    float ray_x;
+    float ray_y;
+    
+    cos_angle = cos(x);
+    sin_angle = sin(x);
+    ray_x = player->x;
+    ray_y = player->y;
+    
+    // Cast ray until it hits a wall
+    while(!touch(ray_x, ray_y, execution))
+    {
+        ray_x += cos_angle;
+        ray_y += sin_angle;
+    }
+    
+    // Calculate distance
+    float dist = fixed_dist(player->x, player->y, ray_x, ray_y, execution);
+    if (dist < 1) 
+        dist = 1;
+    
+    float height = (BLOCK_SIZE / dist) * (WIDTH / 2);
+    int start_y = (HEIGHT - height) / 2;
+    int end = start_y + height;
+    
+    // Draw white wall line
+    while(start_y < end)
+    {
+        my_mlx_pixel_put(i, start_y, execution, 0xFFFFFF); // White
+        start_y++;
+    }
+}
+
 
 int draw_a_loop(t_execution *execution)
 {
@@ -51,12 +101,12 @@ int draw_a_loop(t_execution *execution)
 	float start_x;
 	int i;
 
-	fraction = PI / 3 / WIDTH;
-	i = 0;
-	clear_image(execution);		
 	t_player *player = &execution->player;
+	clear_image(execution);		
 	player_movement(player);
-	start_x = player->angle - (PI / 6);
+	fraction = PI / 3 / WIDTH;
+	start_x = player->angle - PI / 6;
+	i = 0;
 	// draw_square(player->x, player->y, execution, PLAYER_SIZE, 0x00FF00);
 	// draw_map(execution);
 
@@ -70,40 +120,3 @@ int draw_a_loop(t_execution *execution)
 	return (0);
 }
 
-void draw_line(t_player *player, t_execution *execution, float x, int i)
-{
-    float cos_angle = cos(x);
-    float sin_angle = sin(x);
-    float ray_x = player->x;
-    float ray_y = player->y;
-    
-    while(!touch(ray_x, ray_y, execution))
-    {
-        ray_x += cos_angle;
-        ray_y += sin_angle;
-        
-        // Safety check to prevent infinite loops
-        if (ray_x < 0 || ray_y < 0 || ray_x >= WIDTH || ray_y >= HEIGHT)
-            break;
-    }
-    
-    float dist = distance(ray_x - player->x, ray_y - player->y);
-    if (dist < 0.1) dist = 0.1;
-    
-    float height = (BLOCK_SIZE / dist) * (WIDTH / 2);
-    int start_y = (HEIGHT - height) / 2;
-    int end_y = start_y + height;
-    
-    // Ensure we don't draw outside screen bounds
-    if (start_y < 0) start_y = 0;
-    if (end_y >= HEIGHT) end_y = HEIGHT - 1;
-    
-    // Only draw the wall portion (between start_y and end_y)
-    while(start_y < end_y)
-    {
-        my_mlx_pixel_put(i, start_y, execution, 0x8B4513); // Brown wall color
-        start_y++;
-    }
-    // Note: We don't draw anything for ceiling and floor areas
-    // They're already drawn in clear_image()
-}
