@@ -86,9 +86,23 @@ bool touch(float px, float py,t_execution *execution)
 	int y = (py / BLOCK_SIZE);
 
 	if (execution->map[y][x] == '1') // Assuming '1' represents a wall
-		return true; // Touching a wall
+		return true;
+	return false;
+}
 
-	return false; // Not touching a wall
+void draw_line(t_player *player, t_execution *execution, float x, int i)
+{
+	float cos_angle = cos(x);
+	float sin_angle = sin(x);
+	float ray_x = player->x;
+	float ray_y = player->y;
+	(void)i;
+	while(!touch(ray_x, ray_y, execution))
+	{
+		my_mlx_pixel_put(ray_x, ray_y, execution, 0xFF0000); // Draw the ray in red
+		ray_x += cos_angle;
+		ray_y += sin_angle; // Subtract because y-axis is inverted in most graphics libraries
+	}
 }
 int draw_a_loop(t_execution *execution)
 {
@@ -99,16 +113,14 @@ int draw_a_loop(t_execution *execution)
 	draw_square(player->x, player->y, execution, PLAYER_SIZE, 0x00FF00);
 	draw_map(execution);
 
-	float ray_x = player->x;
-	float ray_y = player->y;
-	float ray_sin_angle = sin(player->angle);
-	float ray_cos_angle = cos(player->angle);
-
-	while (!touch(ray_x, ray_y, execution))
+	float fraction = PI / 3 / WIDTH;
+	float start_x = player->angle - (PI / 6);
+	int i = 0;
+	while(i < WIDTH)
 	{
-		my_mlx_pixel_put(ray_x, ray_y, execution, 0xFF0000); // Draw the ray in red
-		ray_x += ray_cos_angle;
-		ray_y -= ray_sin_angle; // Subtract because y-axis is inverted in most graphics libraries
+		draw_line(player, execution, start_x, i);
+		start_x += fraction;
+		i++;
 	}
 	mlx_put_image_to_window(execution->mlx, execution->win, execution->img, 0, 0);
 	return (0);
