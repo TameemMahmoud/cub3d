@@ -68,8 +68,6 @@ int key_release(int keycode, t_player *player)
 
 void player_movement(t_player *player)
 {
-    // int speed = 3;
-    // float angle_speed = 0.1;
     player->cos_angle = cos(player->angle);
     player->sin_angle = sin(player->angle);
 
@@ -82,8 +80,7 @@ void player_movement(t_player *player)
         player->angle = 0;
     if (player->angle < 0)
         player->angle = 2 * PI; 
-    
-    // Move the player based on key presses
+
     if (player->key_up)
     {
         player->x += player->cos_angle * PLAYER_SPEED;

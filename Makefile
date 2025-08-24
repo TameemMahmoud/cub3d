@@ -16,8 +16,8 @@ GNL_FILES = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
 GNL_OBJS = $(GNL_FILES:.c=.o)
 
 SRC_MAIN = src/main.c
-SRC = src/cub3d.c src/utils/init.c src/utils/clean_and_exit.c src/parsing/parsing.c src/parsing/validate_map.c \
-	src/parsing/parsing_map.c src/utils/is_empty_line.c src/execution/execution.c src/execution/player.c \
+SRC = src/cub3d.c src/utils/init.c src/utils/clean_and_exit.c src/utils/mlx_utils.c src/parsing/parsing.c src/parsing/validate_map.c \
+	src/parsing/parsing_map.c src/utils/is_empty_line.c src/execution/ft_execution.c src/execution/ft_drawing.c src/execution/ft_player.c src/execution/ft_init_cub3d.c\
 
 OBJS = $(SRC:.c=.o)
 OBJS_MAIN = $(SRC_MAIN:.c=.o)
