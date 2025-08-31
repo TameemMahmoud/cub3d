@@ -75,6 +75,10 @@ void draw_line(t_player *player, t_execution *execution, float x, int i)
     {
         ray_x += cos_angle;
         ray_y += sin_angle;
+        
+        // Prevent infinite loops
+        if (ray_x < 0 || ray_y < 0 || ray_x >= WIDTH || ray_y >= HEIGHT)
+            break;
     }
     
     // Calculate distance
@@ -103,7 +107,7 @@ int draw_a_loop(t_execution *execution)
 
 	t_player *player = &execution->player;
 	clear_image(execution);		
-	player_movement(player);
+	ft_player_movement(player, execution);
 	fraction = PI / 3 / WIDTH;
 	start_x = player->angle - PI / 6;
 	i = 0;
