@@ -16,13 +16,13 @@ void ft_init_player(t_player *player, t_src *src)
     player->y = src->map->player_y * BLOCK_SIZE + BLOCK_SIZE / 2;
     
     if (src->map->player_dir == 'N')
-        player->angle = 3 * PI / 2;  // Facing North (up)
+        player->angle = 3 * PI / 2;
     else if (src->map->player_dir == 'S')
-        player->angle = PI / 2;      // Facing South (down)
+        player->angle = PI / 2;
     else if (src->map->player_dir == 'E')
-        player->angle = 0;           // Facing East (right)
+        player->angle = 0;
     else if (src->map->player_dir == 'W')
-        player->angle = PI;          // Facing West (left)
+        player->angle = PI;
     
     printf("Player initialized at grid (%d,%d) facing '%c'\n", 
            src->map->player_x, src->map->player_y, src->map->player_dir);
@@ -84,12 +84,10 @@ int key_release(int keycode, t_player *player)
     return (0);
 }
 
-void player_movement(t_player *player, t_execution *execution)
+void init_player_angles(t_player *player)
 {
     player->cos_angle = cos(player->angle);
     player->sin_angle = sin(player->angle);
-
-    // Rotation (no collision needed)
     if (player->key_rotate_left)
         player->angle -= ANGLE_SPEED;
     if (player->key_rotate_right)
@@ -98,30 +96,58 @@ void player_movement(t_player *player, t_execution *execution)
         player->angle = 0;
     if (player->angle < 0)
         player->angle = 2 * PI; 
-
-    // Movement with collision detection
-    if (player->key_up)
-    {
-        float new_x = player->x + player->cos_angle * PLAYER_SPEED;
-        float new_y = player->y + player->sin_angle * PLAYER_SPEED;
-        move_player_safe(player, new_x, new_y, execution);
-    }
-    if (player->key_down)
-    {
-        float new_x = player->x - player->cos_angle * PLAYER_SPEED;
-        float new_y = player->y - player->sin_angle * PLAYER_SPEED;
-        move_player_safe(player, new_x, new_y, execution);
-    }
+}
+void set_key_left_and_right(t_player *player, t_execution *execution)
+{
     if (player->key_left)
     {
-        float new_x = player->x + player->sin_angle * PLAYER_SPEED;
-        float new_y = player->y - player->cos_angle * PLAYER_SPEED;
-        move_player_safe(player, new_x, new_y, execution);
+        player->new_x = player->x + player->sin_angle * PLAYER_SPEED;
+        player->new_y = player->y - player->cos_angle * PLAYER_SPEED;
+        if (!touch(player->new_x, player->new_y, execution))
+        {
+            player->x = player->new_x;;
+            player->y = player->new_y;
+        }
     }
     if (player->key_right)
     {
-        float new_x = player->x - player->sin_angle * PLAYER_SPEED;
-        float new_y = player->y + player->cos_angle * PLAYER_SPEED;
-        move_player_safe(player, new_x, new_y, execution);
+        player->new_x = player->x - player->sin_angle * PLAYER_SPEED;
+        player->new_y = player->y + player->cos_angle * PLAYER_SPEED;
+        if (!touch(player->new_x, player->new_y, execution))
+        {
+            player->x = player->new_x;;
+            player->y = player->new_y;
+        }
     }
+}
+
+void set_key_up_and_down(t_player *player, t_execution *execution)
+{
+    if (player->key_up)
+    {
+        player->new_x = player->x + player->cos_angle * PLAYER_SPEED;
+        player->new_y = player->y + player->sin_angle * PLAYER_SPEED;
+        if (!touch(player->new_x, player->new_y, execution))
+        {
+            player->x = player->new_x;;
+            player->y = player->new_y;
+        }
+    }
+    if (player->key_down)
+    {
+        player->new_x = player->x - player->cos_angle * PLAYER_SPEED;
+        player->new_y = player->y - player->sin_angle * PLAYER_SPEED;
+        if (!touch(player->new_x, player->new_y, execution))
+        {
+            player->x = player->new_x;;
+            player->y = player->new_y;
+        }
+    }
+}
+
+void ft_player_movement(t_player *player, t_execution *execution)
+{   
+    init_player_angles(player);
+    set_key_up_and_down(player, execution);
+    set_key_left_and_right(player, execution);
 }

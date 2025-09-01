@@ -22,6 +22,8 @@ typedef struct player
 	float angle; // Player's direction in radians
 	float cos_angle; // Cosine of the angle for movement calculations
 	float sin_angle; // Sine of the angle for movement calculations
+	float new_x;
+	float new_y;
 
 	bool key_up;
 	bool key_down;
@@ -59,12 +61,7 @@ void	clear_image(t_execution *execution);
 void	ft_init_player(t_player *player, t_src *src);
 int		key_release(int keycode, t_player *player);
 int		key_press(int keycode, t_player *player);
-void	player_movement(t_player *player, t_execution *execution);
-
-//ft_collision.c
-bool	check_wall_collision(float x, float y, t_execution *execution);
-bool	check_player_collision(float new_x, float new_y, t_execution *execution);
-void	move_player_safe(t_player *player, float new_x, float new_y, t_execution *execution);
+void	ft_player_movement(t_player *player, t_execution *execution);
 
 //ft_init_cub3d.c
 void ft_init_cub3d(t_execution *cub3d, t_src *src);
