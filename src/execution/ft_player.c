@@ -28,32 +28,35 @@ void ft_init_player(t_player *player, t_src *src)
            src->map->player_x, src->map->player_y, src->map->player_dir);
     printf("Pixel position: (%.1f, %.1f), angle: %.2f\n", 
            player->x, player->y, player->angle);
+    printf("Platform detected: %s\n", PLATFORM_NAME);
+    printf("Key mappings - W:%d A:%d S:%d D:%d ESC:%d\n", 
+           KEY_W, KEY_A, KEY_S, KEY_D, KEY_ESC);
     
     init_player_keys(player);
 }
 
 int key_press(int keycode, t_player *player)
 {
-    printf("Key pressed: %d\n", keycode); // Debug output
-    if(keycode == W)
+    printf("Key pressed: %d (%s)\n", keycode, PLATFORM_NAME); // Debug output with platform
+    if(keycode == KEY_W)
         player->key_up = true;
-    else if(keycode == S)
+    else if(keycode == KEY_S)
         player->key_down = true;
-    else if(keycode == A)
+    else if(keycode == KEY_A)
         player->key_left = true;
-    else if(keycode == D)
+    else if(keycode == KEY_D)
         player->key_right = true;
-    else if(keycode == LEFT)
+    else if(keycode == KEY_LEFT)
     {
         player->key_rotate_left = true;
         printf("Rotating left\n"); // Debug output
     }
-    else if(keycode == RIGHT)
+    else if(keycode == KEY_RIGHT)
     {
         player->key_rotate_right = true;
         printf("Rotating right\n"); // Debug output
     }
-    else if(keycode == ESC)
+    else if(keycode == KEY_ESC)
     {
         printf("Exiting game...\n"); // Debug output
         exit(0); // Exit the game when ESC is pressed
@@ -65,28 +68,28 @@ int key_press(int keycode, t_player *player)
 
 int key_release(int keycode, t_player *player)
 {
-    printf("Key released: %d\n", keycode); // Debug output
-    if(keycode == W)
+    printf("Key released: %d (%s)\n", keycode, PLATFORM_NAME); // Debug output with platform
+    if(keycode == KEY_W)
         player->key_up = false;
-    else if(keycode == S)
+    else if(keycode == KEY_S)
         player->key_down = false;
-    else if(keycode == A)
+    else if(keycode == KEY_A)
         player->key_left = false;
-    else if(keycode == D)
+    else if(keycode == KEY_D)
         player->key_right = false;
-    else if(keycode == LEFT)
+    else if(keycode == KEY_LEFT)
         player->key_rotate_left = false;
-    else if(keycode == RIGHT)
+    else if(keycode == KEY_RIGHT)
         player->key_rotate_right = false;
     return (0);
 }
 
-void player_movement(t_player *player)
+void player_movement(t_player *player, t_execution *execution)
 {
     player->cos_angle = cos(player->angle);
     player->sin_angle = sin(player->angle);
 
-    
+    // Rotation (no collision needed)
     if (player->key_rotate_left)
         player->angle -= ANGLE_SPEED;
     if (player->key_rotate_right)
@@ -96,24 +99,29 @@ void player_movement(t_player *player)
     if (player->angle < 0)
         player->angle = 2 * PI; 
 
+    // Movement with collision detection
     if (player->key_up)
     {
-        player->x += player->cos_angle * PLAYER_SPEED;
-        player->y += player->sin_angle * PLAYER_SPEED;
+        float new_x = player->x + player->cos_angle * PLAYER_SPEED;
+        float new_y = player->y + player->sin_angle * PLAYER_SPEED;
+        move_player_safe(player, new_x, new_y, execution);
     }
     if (player->key_down)
     {
-        player->x -= player->cos_angle * PLAYER_SPEED;
-        player->y -= player->sin_angle * PLAYER_SPEED;
+        float new_x = player->x - player->cos_angle * PLAYER_SPEED;
+        float new_y = player->y - player->sin_angle * PLAYER_SPEED;
+        move_player_safe(player, new_x, new_y, execution);
     }
     if (player->key_left)
     {
-        player->x += player->sin_angle * PLAYER_SPEED;
-        player->y -= player->cos_angle * PLAYER_SPEED;
+        float new_x = player->x + player->sin_angle * PLAYER_SPEED;
+        float new_y = player->y - player->cos_angle * PLAYER_SPEED;
+        move_player_safe(player, new_x, new_y, execution);
     }
     if (player->key_right)
     {
-        player->x -= player->sin_angle * PLAYER_SPEED;
-        player->y += player->cos_angle * PLAYER_SPEED;
+        float new_x = player->x - player->sin_angle * PLAYER_SPEED;
+        float new_y = player->y + player->cos_angle * PLAYER_SPEED;
+        move_player_safe(player, new_x, new_y, execution);
     }
 }

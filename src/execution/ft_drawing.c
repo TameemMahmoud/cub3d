@@ -103,7 +103,7 @@ int draw_a_loop(t_execution *execution)
 
 	t_player *player = &execution->player;
 	clear_image(execution);		
-	player_movement(player);
+	player_movement(player, execution);
 	fraction = PI / 3 / WIDTH;
 	start_x = player->angle - PI / 6;
 	i = 0;

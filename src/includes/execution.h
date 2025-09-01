@@ -2,6 +2,7 @@
 #define EXECUTION_H
 
 #include "cub3d.h"
+#include "keycodes.h"
 
 #define WIDTH 1280
 #define HEIGHT 720
@@ -10,25 +11,7 @@
 #define PLAYER_SIZE 10
 #define ANGLE_SPEED 0.03
 
-/*
-Player Movement Keys
-*/
-#define W 13
-#define A 0
-#define S 1
-#define D 2
-
-/*
-Player Rotation Keys
-*/
-#define LEFT 123
-#define RIGHT 124
-#define UP 126
-#define DOWN 125
-
-
 #define PI 3.14159265358979323846
-#define ESC 53
 
 
 typedef struct player
@@ -76,7 +59,12 @@ void	clear_image(t_execution *execution);
 void	ft_init_player(t_player *player, t_src *src);
 int		key_release(int keycode, t_player *player);
 int		key_press(int keycode, t_player *player);
-void	player_movement(t_player *player);
+void	player_movement(t_player *player, t_execution *execution);
+
+//ft_collision.c
+bool	check_wall_collision(float x, float y, t_execution *execution);
+bool	check_player_collision(float new_x, float new_y, t_execution *execution);
+void	move_player_safe(t_player *player, float new_x, float new_y, t_execution *execution);
 
 //ft_init_cub3d.c
 void ft_init_cub3d(t_execution *cub3d, t_src *src);
