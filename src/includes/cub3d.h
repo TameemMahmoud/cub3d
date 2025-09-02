@@ -22,9 +22,14 @@ typedef struct s_textures {
 } t_textures;
 
 typedef struct s_colors {
-	int floor_r, floor_g, floor_b;
-	int ceiling_r, ceiling_g, ceiling_b;
-	int floor_set, ceiling_set;
+	int floor_r;
+	int floor_g;
+	int floor_b;
+	int ceiling_r;
+	int ceiling_g;
+	int ceiling_b;
+	int floor_set;
+	int ceiling_set;
 } t_colors;
 
 typedef struct s_file {

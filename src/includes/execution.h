@@ -47,6 +47,8 @@ typedef struct execution
 	t_player player;
 
 	char **map;
+    int floor_color;
+    int ceiling_color;
 } t_execution;
 
 
