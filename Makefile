@@ -23,7 +23,7 @@ GNL_OBJS = $(GNL_FILES:.c=.o)
 SRC_MAIN = src/main.c
 SRC = src/cub3d.c src/utils/init.c src/utils/clean_and_exit.c src/utils/mlx_utils.c src/parsing/parsing.c src/parsing/validate_map.c \
 	src/parsing/parsing_map.c src/utils/is_empty_line.c src/execution/ft_execution.c src/execution/ft_drawing.c src/execution/ft_player.c src/execution/ft_init_cub3d.c \
-	
+	src/execution/ft_textures.c src/execution/ft_calculation.c 
 
 OBJS = $(SRC:.c=.o)
 OBJS_MAIN = $(SRC_MAIN:.c=.o)
@@ -68,6 +68,6 @@ fclean: clean
 re: fclean all
 
 fsanitize: CFLAGS += $(FSANATIZE_FLAGS)
-fsanitize: re
+fsanitize: fclean linux
 
 .PHONY: all linux clean fclean re clean_libft clean_mlx clean_mlx_linux

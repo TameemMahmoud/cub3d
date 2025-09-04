@@ -13,44 +13,56 @@
 
 #define PI 3.14159265358979323846
 
+typedef struct s_texture {
+    void    *img;
+    char    *data;
+    int     width;
+    int     height;
+    int     bits_per_pixel;
+    int     line_length;
+    int     endian;
+} t_texture;
 
 typedef struct player
 {
-	// t_execution *execution;
-	float x;
-	float y;
-	float angle; // Player's direction in radians
-	float cos_angle; // Cosine of the angle for movement calculations
-	float sin_angle; // Sine of the angle for movement calculations
-	float new_x;
-	float new_y;
-
-	bool key_up;
-	bool key_down;
-	bool key_left;
-	bool key_right;
-
-	bool key_rotate_left;
-	bool key_rotate_right;
+    float   x;
+    float   y;
+    float   angle;
+    bool    key_up;
+    bool    key_down;
+    bool    key_left;
+    bool    key_right;
+    bool    key_rotate_left;
+    bool    key_rotate_right;
 } t_player;
 
 typedef struct execution
 {
-	void *mlx;
-	void *win;
-	void *img;
-	char *pixels_ptr;
-	char *img_data;
-	int bits_per_pixel;
-	int line_length;
-	int endian;
-	t_player player;
-
-	char **map;
+    void *mlx;
+    void *win;
+    void *img;
+    char *pixels_ptr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+    t_player player;
+    
+    char **map;
     int floor_color;
     int ceiling_color;
-} t_execution;
+    
+    // Raycasting data - ADD THESE
+    float ray_x;
+    float ray_y;
+    int wall_start;
+    int wall_end;
 
+    // Texture support
+    t_texture north_texture;
+    t_texture south_texture;
+    t_texture east_texture;
+    t_texture west_texture;
+} t_execution;
 
 //ft_execution.c
 void	execution(t_src *src);
@@ -64,18 +76,29 @@ void	ft_init_player(t_player *player, t_src *src);
 int		key_release(int keycode, t_player *player);
 int		key_press(int keycode, t_player *player);
 void	ft_player_movement(t_player *player, t_execution *execution);
+bool	check_collision(float new_x, float new_y, t_execution *execution);
+void	move_forward_backward(t_player *player, t_execution *execution);
+void	move_left_right(t_player *player, t_execution *execution);
+
 
 //ft_init_cub3d.c
-void ft_init_cub3d(t_execution *cub3d, t_src *src);
+void    ft_init_cub3d(t_execution *cub3d, t_src *src);
+void    load_all_textures(t_execution *cub3d, t_src *src);
 
 //ft_drawing.c
-void	draw_square(int x, int y, t_execution *execution, int size, int color);
-void	draw_map(t_execution *execution);
-int		draw_a_loop(t_execution *execution);
-void	draw_line(t_player *player, t_execution *execution, float x, int i);
+int     draw_a_loop(t_execution *execution);
+void    draw_solid_color_wall(t_execution *execution, int column, int wall_start, int wall_end, int direction);
 
 
+//ft_calculation.c
+float	fixed_dist(float x1, float y1, float x2, float y2, t_execution *game);
+int		get_wall_direction(float ray_x, float ray_y);
+void    calculate_wall_dimensions(float dist, int *wall_start, int *wall_end);
+void    cast_ray(t_player *player, t_execution *execution, float angle, float *ray_x, float *ray_y);
+
+//ft_textures.c
+void    draw_textured_wall(t_execution *execution, int column, int direction);
 //mlx_utils.c
-void	my_mlx_pixel_put(int x, int y, t_execution *execution, int color);
+void my_mlx_pixel_put(int x, int y, t_execution *execution, int color);
 
 #endif

@@ -1,12 +1,11 @@
-F                        0    , 0    ,     100
-C                       0    , 0    ,     100
-
-    WE textures/greenlight.xpm
-SO textures/colorstone.xpm
-EA textures/eagle.xpm
-NO textures/bluestone.xpm
+NO ./textures/colorstone.xpm
+SO ./textures/wood.xpm
+WE ./textures/mossy.xpm
+EA ./textures/mossy.xpm
 
 
+F 100,100,100
+C 173,200,210
 
 1111111111111111111111111111
   1010000000011000000000000111111
