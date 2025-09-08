@@ -17,7 +17,9 @@ GNL_OBJS = $(GNL_FILES:.c=.o)
 SRC_MAIN = src/main.c
 SRC = src/cub3d.c src/utils/init.c src/utils/clean_up.c src/utils/exit.c src/parsing/parsing.c src/parsing/validate_elements/validate_elements.c \
 	src/parsing/parse_map/parsing_map.c src/utils/is_empty_line.c src/parsing/validate_elements/parse_color.c \
-	src/parsing/validate_elements/parse_texture.c src/parsing/parse_map/allocate_map_structure.c src/parsing/parse_map/extract_map_lines.c \
+	src/parsing/validate_elements/parse_texture.c src/parsing/validate_elements/parse_texture_helper.c \
+	src/parsing/validate_elements/color_storage.c src/parsing/validate_elements/color_utils.c src/parsing/validate_elements/color_validation.c \
+	src/parsing/parse_map/allocate_map_structure.c src/parsing/parse_map/extract_map_lines.c \
 	src/parsing/parse_map/validate_map_chars.c src/parsing/parse_map/find_player.c
 
 OBJS = $(SRC:.c=.o)

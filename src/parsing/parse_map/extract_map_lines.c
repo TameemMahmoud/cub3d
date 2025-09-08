@@ -6,7 +6,7 @@
 /*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 20:59:11 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/08/07 21:01:22 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/08 21:11:37 by tmahmoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	extract_map_lines(t_src *src, char ***map_lines, int *height)
 		exit_failure_clear(src, "Error\nNo map found");
 	*map_lines = (char **)ft_calloc(*height + 1, sizeof(char *));
 	if (!*map_lines)
-		exit_failure_clear(src, "Error\nMalloc error");
+		exit_failure_clear_lines(src, "Error\nMalloc error");
 	i = src->file.map_start_index;
 	map_index = 0;
 	while (i < src->file.file_len)
