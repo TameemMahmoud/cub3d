@@ -6,14 +6,14 @@
 /*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 20:13:29 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/09/06 23:40:14 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/07 15:15:52 by tmahmoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void	store_north_south_textures(t_src *src, char *id, char *path,
-										char *identifier, char *trimmed_line)
+static void	store_north_south_textures(t_src *src, char *id, char *path, 
+									   char *identifier, char *trimmed_line)
 {
 	if (ft_strncmp(id, "NO", 2) == 0)
 	{

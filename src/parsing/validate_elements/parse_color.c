@@ -6,7 +6,7 @@
 /*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 20:19:51 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/08/07 20:35:32 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/07 15:16:17 by tmahmoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ static int	validate_color_values(char **rgb)
 	return (1);
 }
 
+static void	cleanup_and_exit(t_src *src, char *id, char *color, char **rgb, char *msg)
+{
+	free(id);
+	free(color);
+	free_split(rgb);
+	exit_failure_clear(src, msg);
+}
+
 static void	store_color_values(t_src *src, char *id, char **rgb)
 {
 	int	r;
@@ -54,8 +62,6 @@ static void	store_color_values(t_src *src, char *id, char **rgb)
 	b = ft_atoi(rgb[2]);
 	if (ft_strncmp(id, "F", 1) == 0)
 	{
-		if (src->colors.floor_set)
-			exit_failure_clear(src, "Error\nDuplicate floor color");
 		src->colors.floor_r = r;
 		src->colors.floor_g = g;
 		src->colors.floor_b = b;
@@ -63,13 +69,20 @@ static void	store_color_values(t_src *src, char *id, char **rgb)
 	}
 	else if (ft_strncmp(id, "C", 1) == 0)
 	{
-		if (src->colors.ceiling_set)
-			exit_failure_clear(src, "Error\nDuplicate ceiling color");
 		src->colors.ceiling_r = r;
 		src->colors.ceiling_g = g;
 		src->colors.ceiling_b = b;
 		src->colors.ceiling_set = 1;
 	}
+}
+
+static int	check_duplicate_color(t_src *src, char *id)
+{
+	if (ft_strncmp(id, "F", 1) == 0 && src->colors.floor_set)
+		return (1);
+	if (ft_strncmp(id, "C", 1) == 0 && src->colors.ceiling_set)
+		return (1);
+	return (0);
 }
 
 void	parse_color(t_src *src, char *line)
@@ -92,9 +105,16 @@ void	parse_color(t_src *src, char *line)
 		free(identifier);
 		exit_failure_clear(src, "Error\nMalloc error");
 	}
+	if (check_duplicate_color(src, identifier))
+	{
+		if (ft_strncmp(identifier, "F", 1) == 0)
+			cleanup_and_exit(src, identifier, color_str, NULL, "Error\nDuplicate floor color");
+		else
+			cleanup_and_exit(src, identifier, color_str, NULL, "Error\nDuplicate ceiling color");
+	}
 	rgb_values = ft_split(color_str, ',');
 	if (!validate_color_values(rgb_values))
-		exit_failure_clear(src, "Error\nInvalid color format");
+		cleanup_and_exit(src, identifier, color_str, rgb_values, "Error\nInvalid color format");
 	store_color_values(src, identifier, rgb_values);
 	free(identifier);
 	free(color_str);
