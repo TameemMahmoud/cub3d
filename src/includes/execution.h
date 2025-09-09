@@ -51,7 +51,7 @@ typedef struct execution
     int floor_color;
     int ceiling_color;
     
-    // Raycasting data - ADD THESE
+    // Raycasting data
     float ray_x;
     float ray_y;
     int wall_start;
