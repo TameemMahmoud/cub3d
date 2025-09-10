@@ -21,18 +21,18 @@ void	move_with_sliding(t_player *player, t_execution *execution,
 
 	new_x = player->x + move_x;
 	new_y = player->y + move_y;
-	if (!check_collision_smooth(new_x, new_y, execution))
+	if (!check_collision(new_x, new_y, execution))
 	{
 		player->x = new_x;
 		player->y = new_y;
 		return ;
 	}
-	else if (!check_collision_smooth(new_x, player->y, execution))
+	else if (!check_collision(new_x, player->y, execution))
 	{
 		player->x = new_x;
 		return ;
 	}
-	else if (!check_collision_smooth(player->x, new_y, execution))
+	else if (!check_collision(player->x, new_y, execution))
 	{
 		player->y = new_y;
 		return ;

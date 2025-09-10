@@ -13,16 +13,24 @@
 #include "cub3d.h"
 #include "execution.h"
 
-float	fixed_dist(float x1, float y1, float x2, float y2, t_execution *game)
+float	calculate_angle_diff(float delta_x, float delta_y, t_execution *game)
+{
+	float	angle;
+
+	angle = atan2(delta_y, delta_x) - game->player.angle;
+	return (angle);
+}
+
+float	fixed_dist(float ray_x, float ray_y, t_execution *game)
 {
 	float	delta_x;
 	float	delta_y;
 	float	angle;
 	float	fix_dist;
 
-	delta_x = x2 - x1;
-	delta_y = y2 - y1;
-	angle = atan2(delta_y, delta_x) - game->player.angle;
+	delta_x = ray_x - game->player.x;
+	delta_y = ray_y - game->player.y;
+	angle = calculate_angle_diff(delta_x, delta_y, game);
 	fix_dist = distance(delta_x, delta_y) * cos(angle);
 	return (fix_dist);
 }
@@ -65,25 +73,6 @@ int	get_wall_direction(float ray_x, float ray_y)
 	distances[2] = block_x;
 	distances[3] = 1.0 - block_x;
 	return (find_closest_wall_face(distances));
-}
-
-void	cast_ray(t_player *player, t_execution *execution, float angle,
-		float *ray_x, float *ray_y)
-{
-	float	cos_angle;
-	float	sin_angle;
-
-	cos_angle = cos(angle);
-	sin_angle = sin(angle);
-	*ray_x = player->x;
-	*ray_y = player->y;
-	while (!touch(*ray_x, *ray_y, execution))
-	{
-		*ray_x += cos_angle;
-		*ray_y += sin_angle;
-		if (*ray_x < 0 || *ray_y < 0)
-			break ;
-	}
 }
 
 void	calculate_wall_dimensions(float dist, int *wall_start, int *wall_end)

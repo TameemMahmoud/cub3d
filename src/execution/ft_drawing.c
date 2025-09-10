@@ -13,83 +13,94 @@
 #include "execution.h"
 #include "cub3d.h"
 
-void draw_ceiling_floor(t_execution *execution, int column, int wall_start, int wall_end)
+void	cast_ray(t_player *player, t_execution *execution, float angle)
 {
-    int	y;
-    
-    y = 0;
-    while (y < wall_start)
-    {
-        my_mlx_pixel_put(column, y, execution, execution->ceiling_color);
-        y++;
-    }
-    y = wall_end;
-    while (y < HEIGHT)
-    {
-        my_mlx_pixel_put(column, y, execution, execution->floor_color);
-        y++;
-    }
+	float	cos_angle;
+	float	sin_angle;
+
+	cos_angle = cos(angle);
+	sin_angle = sin(angle);
+	execution->ray_x = player->x;
+	execution->ray_y = player->y;
+	while (!touch(execution->ray_x, execution->ray_y, execution))
+	{
+		execution->ray_x += cos_angle;
+		execution->ray_y += sin_angle;
+		if (execution->ray_x < 0 || execution->ray_y < 0)
+			break ;
+	}
 }
 
-void draw_solid_color_wall(t_execution *execution, int column, 
-                          int wall_start, int wall_end, int direction)
+void	draw_ceiling_floor(t_execution *execution, int column,
+						int wall_start, int wall_end)
 {
-    int	color;
-    int	y;
-    
-    if (direction == 0)
-        color = 0xFF0000;
-    else if (direction == 1)
-        color = 0x00FF00;
-    else if (direction == 2)
-        color = 0x0000FF;
-    else
-        color = 0xFFFF00;
-    y = wall_start;
-    while (y < wall_end && y < HEIGHT)
-    {
-        my_mlx_pixel_put(column, y, execution, color);
-        y++;
-    }
+	int	y;
+
+	y = 0;
+	while (y < wall_start)
+	{
+		my_mlx_pixel_put(column, y, execution, execution->ceiling_color);
+		y++;
+	}
+	y = wall_end;
+	while (y < HEIGHT)
+	{
+		my_mlx_pixel_put(column, y, execution, execution->floor_color);
+		y++;
+	}
 }
 
-void	draw_line(t_player *player, t_execution *execution, float x, int i)
+void	draw_error_pattern(t_execution *execution, int column,
+						int wall_start, int wall_end)
 {
-    float	ray_x;
-    float	ray_y;
-    float	dist;
-    int		direction;
+	int	y;
+	int	color;
 
-    cast_ray(player, execution, x, &ray_x, &ray_y);
-    execution->ray_x = ray_x;
-    execution->ray_y = ray_y;
-    dist = fixed_dist(player->x, player->y, ray_x, ray_y, execution);
-    calculate_wall_dimensions(dist, &execution->wall_start, &execution->wall_end);
-    direction = get_wall_direction(ray_x, ray_y);
-    draw_ceiling_floor(execution, i, execution->wall_start, execution->wall_end);
-    draw_textured_wall(execution, i, direction);
+	y = wall_start;
+	while (y < wall_end && y < HEIGHT)
+	{
+		if ((y / 8) % 2)
+			color = 0xFF00FF;
+		else
+			color = 0x800080;
+		my_mlx_pixel_put(column, y, execution, color);
+		y++;
+	}
 }
 
-int draw_a_loop(t_execution *execution)
+void	draw_line(t_player *player, t_execution *exec, float x, int i)
 {
-    float		fraction;
-    float		start_x;
-    int			i;
-    t_player	*player;
+	float	dist;
+	int		direction;
 
-    player = &execution->player;
-    clear_image(execution);		
-    ft_player_movement(player, execution);
-    fraction = PI / 3 / WIDTH;
-    start_x = player->angle - PI / 6;
-    i = 0;
-    while(i < WIDTH)
-    {
-        draw_line(player, execution, start_x, i);
-        start_x += fraction;
-        i++;
-    }
-    mlx_put_image_to_window(execution->mlx, execution->win, execution->img, 0, 0);
-    return (0);
+	cast_ray(player, exec, x);
+	dist = fixed_dist(exec->ray_x, exec->ray_y, exec);
+	calculate_wall_dimensions(dist, &exec->wall_start, &exec->wall_end);
+	direction = get_wall_direction(exec->ray_x, exec->ray_y);
+	draw_ceiling_floor(exec, i, exec->wall_start, exec->wall_end);
+	draw_textured_wall(exec, i, direction);
 }
 
+int	draw_a_loop(t_execution *exec)
+{
+	float		fraction;
+	float		start_x;
+	int			i;
+	t_player	*player;
+
+	player = &exec->player;
+	clear_image(exec);
+	ft_player_movement(player, exec);
+	fraction = PI / 3 / WIDTH;
+	start_x = player->angle - PI / 6;
+	i = 0;
+	while (i < WIDTH)
+	{
+		draw_line(player, exec, start_x, i);
+		start_x += fraction;
+		i++;
+	}
+	mlx_put_image_to_window(exec->mlx_data.mlx, exec->mlx_data.win,
+		exec->mlx_data.img, 0, 0);
+	return (0);
+}
