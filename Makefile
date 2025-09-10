@@ -20,7 +20,7 @@ SRC = src/cub3d.c src/utils/init.c src/utils/clean_up.c src/utils/exit.c src/par
 	src/parsing/validate_elements/parse_texture.c src/parsing/validate_elements/parse_texture_helper.c \
 	src/parsing/validate_elements/color_storage.c src/parsing/validate_elements/color_utils.c src/parsing/validate_elements/color_validation.c \
 	src/parsing/parse_map/allocate_map_structure.c src/parsing/parse_map/extract_map_lines.c \
-	src/parsing/parse_map/validate_map_chars.c src/parsing/parse_map/find_player.c
+	src/parsing/parse_map/validate_map_chars.c src/parsing/parse_map/find_player.c src/parsing/parse_map/parse_map_utils.c
 
 OBJS = $(SRC:.c=.o)
 OBJS_MAIN = $(SRC_MAIN:.c=.o)
