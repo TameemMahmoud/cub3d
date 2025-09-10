@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_calculation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/10 11:55:32 by mohkhan           #+#    #+#             */
+/*   Updated: 2025/09/10 11:55:33 by mohkhan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 #include "execution.h"
 
@@ -12,11 +24,10 @@ float	fixed_dist(float x1, float y1, float x2, float y2, t_execution *game)
 	delta_y = y2 - y1;
 	angle = atan2(delta_y, delta_x) - game->player.angle;
 	fix_dist = distance(delta_x, delta_y) * cos(angle);
-	return fix_dist;
+	return (fix_dist);
 }
 
-
-int find_closest_wall_face(float *distances)
+int	find_closest_wall_face(float *distances)
 {
 	float	min_dist;
 	int		direction;
@@ -34,10 +45,10 @@ int find_closest_wall_face(float *distances)
 		}
 		i++;
 	}
-	return direction;
+	return (direction);
 }
 
-int get_wall_direction(float ray_x, float ray_y)
+int	get_wall_direction(float ray_x, float ray_y)
 {
 	int		map_x;
 	int		map_y;
@@ -49,14 +60,15 @@ int get_wall_direction(float ray_x, float ray_y)
 	map_y = (int)(ray_y / BLOCK_SIZE);
 	block_x = (ray_x / BLOCK_SIZE) - map_x;
 	block_y = (ray_y / BLOCK_SIZE) - map_y;
-    distances[0] = block_y;            // Distance to top edge (North)
-	distances[1] = 1.0 - block_y;      // Distance to bottom edge (South)
-	distances[2] = block_x;            // Distance to left edge (West)
-	distances[3] = 1.0 - block_x;      // Distance to right edge (East)
-	return find_closest_wall_face(distances);
+	distances[0] = block_y;
+	distances[1] = 1.0 - block_y;
+	distances[2] = block_x;
+	distances[3] = 1.0 - block_x;
+	return (find_closest_wall_face(distances));
 }
 
-void cast_ray(t_player *player, t_execution *execution, float angle, float *ray_x, float *ray_y)
+void	cast_ray(t_player *player, t_execution *execution, float angle,
+		float *ray_x, float *ray_y)
 {
 	float	cos_angle;
 	float	sin_angle;
@@ -70,14 +82,14 @@ void cast_ray(t_player *player, t_execution *execution, float angle, float *ray_
 		*ray_x += cos_angle;
 		*ray_y += sin_angle;
 		if (*ray_x < 0 || *ray_y < 0)
-			break;
+			break ;
 	}
 }
 
-void calculate_wall_dimensions(float dist, int *wall_start, int *wall_end)
+void	calculate_wall_dimensions(float dist, int *wall_start, int *wall_end)
 {
 	float	height;
-	
+
 	if (dist < 1)
 		dist = 1;
 	height = (BLOCK_SIZE / dist) * (WIDTH / 2);

@@ -36,9 +36,11 @@ SRC_PARSING = src/parsing/parsing.c \
 SRC_EXECUTION = src/execution/ft_execution.c \
 	src/execution/ft_drawing.c \
 	src/execution/ft_player.c \
+	src/execution/ft_player_movement.c \
+	src/execution/ft_init_player.c \
 	src/execution/ft_init_cub3d.c \
 	src/execution/ft_textures.c \
-	src/execution/ft_calculation.c
+	src/execution/ft_calculation.c 
 
 SRC_UTILS = src/utils/init.c \
 	src/utils/clean_up.c \
@@ -79,13 +81,11 @@ linux: $(LIBFT_LIB) $(MLX_LINUX_LIB) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS)
 clean:
 	make clean -C $(LIBFT_DIR)
 	make clean -C $(MLX_DIR)
-	make clean -C $(MLX_LINUX_DIR)
 	$(RM) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS)
 
 fclean: clean
 	make fclean -C $(LIBFT_DIR)
 	make clean -C $(MLX_DIR)
-	make clean -C $(MLX_LINUX_DIR)
 	$(RM) $(NAME)
 
 re: fclean all

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/10 11:56:36 by mohkhan           #+#    #+#             */
+/*   Updated: 2025/09/10 12:16:56 by mohkhan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXECUTION_H
 #define EXECUTION_H
 
@@ -22,6 +34,7 @@ typedef struct s_texture {
     int     line_length;
     int     endian;
 } t_texture;
+
 
 typedef struct player
 {
@@ -72,14 +85,16 @@ bool	touch(float px, float py, t_execution *execution);
 void	clear_image(t_execution *execution);
 
 //ft_player.c
-void	ft_init_player(t_player *player, t_src *src);
 int		key_release(int keycode, t_player *player);
 int		key_press(int keycode, t_player *player);
-void	ft_player_movement(t_player *player, t_execution *execution);
+bool    check_collision_smooth(float new_x, float new_y, t_execution *execution);
 bool	check_collision(float new_x, float new_y, t_execution *execution);
-void	move_forward_backward(t_player *player, t_execution *execution);
-void	move_left_right(t_player *player, t_execution *execution);
 
+//ft_init_player.c
+void	ft_init_player(t_player *player, t_src *src);
+
+//ft_player_movement.c
+void	ft_player_movement(t_player *player, t_execution *execution);
 
 //ft_init_cub3d.c
 void    ft_init_cub3d(t_execution *cub3d, t_src *src);
@@ -98,6 +113,7 @@ void    cast_ray(t_player *player, t_execution *execution, float angle, float *r
 
 //ft_textures.c
 void    draw_textured_wall(t_execution *execution, int column, int direction);
+
 //mlx_utils.c
 void my_mlx_pixel_put(int x, int y, t_execution *execution, int color);
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_textures.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/10 11:56:02 by mohkhan           #+#    #+#             */
+/*   Updated: 2025/09/10 11:56:03 by mohkhan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 #include "execution.h"
 
@@ -9,7 +21,7 @@ int get_texture_color(t_texture *texture, int tex_x, int tex_y)
         return (0xFFFFFF);
     if (tex_x < 0 || tex_x >= texture->width || 
         tex_y < 0 || tex_y >= texture->height)
-        return (0xFFFFFF);
+        return (0xFFFFFF); 
     pixel_index = (tex_y * texture->line_length) + 
                   (tex_x * (texture->bits_per_pixel / 8));
     return (*(int*)(texture->data + pixel_index));
