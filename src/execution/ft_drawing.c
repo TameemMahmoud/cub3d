@@ -6,7 +6,7 @@
 /*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:55:49 by mohkhan           #+#    #+#             */
-/*   Updated: 2025/09/10 11:55:50 by mohkhan          ###   ########.fr       */
+/*   Updated: 2025/09/11 10:56:00 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,20 @@ void	cast_ray(t_player *player, t_execution *execution, float angle)
 {
 	float	cos_angle;
 	float	sin_angle;
+	float	step_size;
 
 	cos_angle = cos(angle);
 	sin_angle = sin(angle);
 	execution->ray_x = player->x;
 	execution->ray_y = player->y;
+	step_size = 1.0;
 	while (!touch(execution->ray_x, execution->ray_y, execution))
 	{
-		execution->ray_x += cos_angle;
-		execution->ray_y += sin_angle;
+		if (touch(execution->ray_x + cos_angle * step_size,
+				execution->ray_y + sin_angle * step_size, execution))
+			step_size = 0.005;
+		execution->ray_x += cos_angle * step_size;
+		execution->ray_y += sin_angle * step_size;
 		if (execution->ray_x < 0 || execution->ray_y < 0)
 			break ;
 	}
