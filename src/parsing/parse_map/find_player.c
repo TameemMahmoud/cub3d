@@ -6,7 +6,7 @@
 /*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 21:16:49 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/08/07 21:20:04 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/14 22:43:31 by tmahmoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int *player_count)
 		if (is_player_char(map_lines[i][j]))
 		{
 			if (*player_count > 0)
-				exit_failure_clear(src, "Error\nMultiple players found");
+				exit_failure_clear_lines(src, "Error\nMultiple players found",
+					map_lines, src->map->height);
 			save_player_position(src, map_lines, i, j);
 			(*player_count)++;
 		}
@@ -49,6 +50,7 @@ void	find_player(t_src *src, char **map_lines, int height)
 	int	i;
 	int	player_count;
 
+	src->map->height = height;
 	i = 0;
 	player_count = 0;
 	while (i < height)
@@ -57,5 +59,6 @@ void	find_player(t_src *src, char **map_lines, int height)
 		i++;
 	}
 	if (player_count == 0)
-		exit_failure_clear(src, "Error\nNo player found");
+		exit_failure_clear_lines(src,
+			"Error\nNo player found", map_lines, height);
 }

@@ -6,7 +6,7 @@
 /*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 21:12:24 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/08/07 21:14:43 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/14 22:36:55 by tmahmoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	validate_map_chars(t_src *src, char **map_lines, int height)
 		while (map_lines[i][j])
 		{
 			if (!is_valid_map_char(map_lines[i][j]))
-				exit_failure_clear(src, "Error\nInvalid character in map");
+				exit_failure_clear_lines(src, "Error\nInvalid character in map",
+					map_lines, height);
 			j++;
 		}
 		i++;

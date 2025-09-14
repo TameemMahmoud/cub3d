@@ -6,7 +6,7 @@
 /*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:39:09 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/08/07 21:24:11 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/14 22:54:37 by tmahmoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ static void	validate_map_walls(t_src *src, char **map_lines, int height)
 			if (map_lines[i][j] == '0')
 			{
 				if (!is_walkable_space_enclosed(map_lines, j, i, height))
-					exit_failure_clear(src, "Error\nMap not closed by walls");
+					exit_failure_clear_lines(src,
+						"Error\nMap not closed by walls", map_lines, height);
 			}
 			j++;
 		}
@@ -99,8 +100,8 @@ void	parse_map(t_src *src)
 	extract_map_lines(src, &map_lines, &height);
 	validate_map_chars(src, map_lines, height);
 	find_player(src, map_lines, height);
+	validate_map_walls(src, map_lines, height);
 	src->map->width = get_map_width(map_lines, height);
 	src->map->height = height;
 	src->map->grid = map_lines;
-	validate_map_walls(src, map_lines, height);
 }

@@ -1,14 +1,14 @@
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 
 LIBFT_DIR = src/includes/libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-MLX_DIR = src/includes/mlx
-MLX_LIB = $(MLX_DIR)/libmlx.a
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+# MLX_DIR = src/includes/mlx
+# MLX_LIB = $(MLX_DIR)/libmlx.a
+# MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 GNL_DIR = src/includes/get_next_line
 GNL_FILES = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
@@ -30,29 +30,26 @@ all: $(NAME)
 $(LIBFT_LIB):
 	make -C $(LIBFT_DIR)
 
-$(MLX_LIB):
-	make -C $(MLX_DIR)
+# $(MLX_LIB):
+# 	make -C $(MLX_DIR)
 
-$(NAME): $(LIBFT_LIB) $(MLX_LIB) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS) $(LIBFT_LIB) $(MLX_FLAGS) -o $(NAME)
+$(NAME): $(LIBFT_LIB) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS) $(LIBFT_LIB) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -Imlx_mac -Isrc/includes/libft -Isrc/includes/get_next_line -c $< -o $@
+	$(CC) $(CFLAGS) -Isrc/includes/libft -Isrc/includes/get_next_line -c $< -o $@
 
 clean_libft:
 	make clean -C $(LIBFT_DIR)
 
-clean_mlx:
-	make clean -C $(MLX_DIR)
 
-clean: clean_libft clean_mlx
+clean: clean_libft
 	rm -f $(OBJS) $(OBJS_MAIN) $(GNL_OBJS)
 
 fclean: clean
 	make fclean -C $(LIBFT_DIR)
-	make clean -C $(MLX_DIR)
 	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re clean_libft clean_mlx
+.PHONY: all clean fclean re clean_libft
