@@ -137,8 +137,8 @@ Ray-casting is a rendering technique that simulates a 3D perspective by:
 
 ## 🤝 Contributors
 
-- [Your Name](https://github.com/mehthishamkhan06)
-- [Contributor Name](https://github.com/TameemMahmoud)
+- [Tameem Mahmoud](https://github.com/TameemMahmoud)
+- [Mohammed Ehthisham](https://github.com/mehthishamkhan06)
 
 ## 📜 License
 
