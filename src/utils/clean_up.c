@@ -6,7 +6,7 @@
 /*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:30:35 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/09/15 11:07:32 by mohkhan          ###   ########.fr       */
+/*   Updated: 2025/09/15 17:49:58 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,6 @@ static void	free_map(t_map *map)
 	free(map);
 }
 
-// static void	cleanup_mlx(t_src *src)
-// {
-// 	if (src->win_ptr)
-// 	{
-// 		mlx_destroy_window(src->mlx_ptr, src->win_ptr);
-// 		src->win_ptr = NULL;
-// 	}
-// 	if (src->mlx_ptr)
-// 	{
-// 		mlx_destroy_display(src->mlx_ptr);
-// 		free(src->mlx_ptr);
-// 		src->mlx_ptr = NULL;
-// 	}
-// }
-
 void	cleanup_all(t_src *src)
 {
 	if (!src)
@@ -108,27 +93,4 @@ void	cleanup_all(t_src *src)
 	free_file_map(&src->file);
 	free_map(src->map);
 	src->map = NULL;
-}
-
-/*
-** Integrated cleanup for both parsing and execution phases
-*/
-void	cleanup_all_phases(t_src *src, t_execution *execution)
-{
-	if (execution)
-	{
-		if (execution->north_texture.img && execution->mlx_data.mlx)
-			mlx_destroy_image(execution->mlx_data.mlx, execution->north_texture.img);
-		if (execution->south_texture.img && execution->mlx_data.mlx)
-			mlx_destroy_image(execution->mlx_data.mlx, execution->south_texture.img);
-		if (execution->east_texture.img && execution->mlx_data.mlx)
-			mlx_destroy_image(execution->mlx_data.mlx, execution->east_texture.img);
-		if (execution->west_texture.img && execution->mlx_data.mlx)
-			mlx_destroy_image(execution->mlx_data.mlx, execution->west_texture.img);
-		if (execution->mlx_data.img && execution->mlx_data.mlx)
-			mlx_destroy_image(execution->mlx_data.mlx, execution->mlx_data.img);
-		if (execution->mlx_data.win && execution->mlx_data.mlx)
-			mlx_destroy_window(execution->mlx_data.mlx, execution->mlx_data.win);
-	}
-	cleanup_all(src);
 }

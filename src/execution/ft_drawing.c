@@ -6,7 +6,7 @@
 /*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:55:49 by mohkhan           #+#    #+#             */
-/*   Updated: 2025/09/11 10:56:00 by mohkhan          ###   ########.fr       */
+/*   Updated: 2025/09/15 13:17:35 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,6 @@ void	draw_ceiling_floor(t_execution *execution, int column,
 	while (y < HEIGHT)
 	{
 		my_mlx_pixel_put(column, y, execution, execution->floor_color);
-		y++;
-	}
-}
-
-void	draw_error_pattern(t_execution *execution, int column,
-						int wall_start, int wall_end)
-{
-	int	y;
-	int	color;
-
-	y = wall_start;
-	while (y < wall_end && y < HEIGHT)
-	{
-		if ((y / 8) % 2)
-			color = 0xFF00FF;
-		else
-			color = 0x800080;
-		my_mlx_pixel_put(column, y, execution, color);
 		y++;
 	}
 }

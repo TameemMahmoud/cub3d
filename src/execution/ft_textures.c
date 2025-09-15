@@ -6,28 +6,14 @@
 /*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:56:02 by mohkhan           #+#    #+#             */
-/*   Updated: 2025/09/10 11:56:03 by mohkhan          ###   ########.fr       */
+/*   Updated: 2025/09/15 17:22:00 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "execution.h"
 
-int	get_texture_color(t_texture *texture, int tex_x, int tex_y)
-{
-	int	pixel_index;
-
-	if (!texture || !texture->data)
-		return (0xFFFFFF);
-	if (tex_x < 0 || tex_x >= texture->width
-		|| tex_y < 0 || tex_y >= texture->height)
-		return (0xFFFFFF);
-	pixel_index = (tex_y * texture->line_length)
-		+ (tex_x * (texture->bits_per_pixel / 8));
-	return (*(int *)(texture->data + pixel_index));
-}
-
-t_texture	*select_texture_by_direction(t_execution *execution, int direction)
+t_texture	*get_wall_texture(t_execution *execution, int direction)
 {
 	if (direction == 0)
 		return (&execution->north_texture);
@@ -39,57 +25,67 @@ t_texture	*select_texture_by_direction(t_execution *execution, int direction)
 		return (&execution->east_texture);
 }
 
-int	calculate_texture_x(float ray_x, float ray_y, int dir, t_texture *texture)
+int	get_texture_color(t_texture *texture, int tex_x, int tex_y)
 {
-	int	tex_x;
+	int	color;
+	int	*pixels;
 
-	if (dir == 0 || dir == 1)
-		tex_x = (int)(ray_x) % BLOCK_SIZE;
-	else
-		tex_x = (int)(ray_y) % BLOCK_SIZE;
-	tex_x = (tex_x * texture->width) / BLOCK_SIZE;
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= texture->width)
-		tex_x = texture->width - 1;
-	return (tex_x);
+	if (!texture || !texture->data)
+		return (0xFF00FF);
+	pixels = (int *)texture->data;
+	if (tex_x < 0 || tex_y < 0 || tex_x >= texture->width
+		|| tex_y >= texture->height)
+		return (0xFF00FF);
+	color = pixels[tex_y * texture->width + tex_x];
+	return (color);
 }
 
-void	draw_texture_column(t_execution *execution, int column,
-			t_texture *texture, int tex_x)
+void	calculate_texture_x(t_execution *exec, int direction, int *tex_x)
 {
-	int	y;
-	int	tex_y;
-	int	color;
+	t_texture	*wall_texture;
 
-	y = execution->wall_start;
-	while (y < execution->wall_end && y < HEIGHT)
+	wall_texture = get_wall_texture(exec, direction);
+	if (direction == 0 || direction == 1)
+		*tex_x = (int)(fmod(exec->ray_x, BLOCK_SIZE) / BLOCK_SIZE
+				* wall_texture->width);
+	else
+		*tex_x = (int)(fmod(exec->ray_y, BLOCK_SIZE) / BLOCK_SIZE
+				* wall_texture->width);
+	if (direction == 1 || direction == 3)
+		*tex_x = wall_texture->width - *tex_x - 1;
+}
+
+void	draw_wall_pixel_column(t_execution *exec, int col, int direction,
+		int tex_x)
+{
+	t_texture	*wall_texture;
+	float		step;
+	float		tex_pos;
+	int			tex_y;
+	int			y;
+
+	wall_texture = get_wall_texture(exec, direction);
+	step = (float)wall_texture->height / (exec->wall_end - exec->wall_start);
+	tex_pos = 0;
+	y = exec->wall_start;
+	while (y < exec->wall_end && y < HEIGHT)
 	{
-		tex_y = ((y - execution->wall_start) * texture->height)
-			/ (execution->wall_end - execution->wall_start);
+		tex_y = (int)tex_pos;
 		if (tex_y < 0)
 			tex_y = 0;
-		if (tex_y >= texture->height)
-			tex_y = texture->height - 1;
-		color = get_texture_color(texture, tex_x, tex_y);
-		my_mlx_pixel_put(column, y, execution, color);
+		if (tex_y >= wall_texture->height)
+			tex_y = wall_texture->height - 1;
+		my_mlx_pixel_put(col, y, exec, get_texture_color(wall_texture, tex_x,
+				tex_y));
+		tex_pos += step;
 		y++;
 	}
 }
 
-void	draw_textured_wall(t_execution *execution, int column, int direction)
+void	draw_textured_wall(t_execution *exec, int col, int direction)
 {
-	t_texture	*current_texture;
-	int			tex_x;
+	int	tex_x;
 
-	current_texture = select_texture_by_direction(execution, direction);
-	if (!current_texture || !current_texture->data)
-	{
-		draw_error_pattern(execution, column, execution->wall_start,
-			execution->wall_end);
-		return ;
-	}
-	tex_x = calculate_texture_x(execution->ray_x, execution->ray_y,
-			direction, current_texture);
-	draw_texture_column(execution, column, current_texture, tex_x);
+	calculate_texture_x(exec, direction, &tex_x);
+	draw_wall_pixel_column(exec, col, direction, tex_x);
 }

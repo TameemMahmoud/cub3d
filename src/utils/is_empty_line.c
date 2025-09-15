@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   is_empty_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:37:45 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/08/03 19:37:46 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:47:01 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 int	is_empty_line(char *line)
 {

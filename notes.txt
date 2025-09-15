@@ -1,2 +1,0 @@
-if .cub files doesn't work on docker use "dos2unix <filename>" this command to convert CRLF endings.
-

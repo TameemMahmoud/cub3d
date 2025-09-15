@@ -51,6 +51,7 @@ SRC_EXECUTION = src/execution/ft_execution.c \
 
 SRC_UTILS = src/utils/init.c \
 	src/utils/clean_up.c \
+	src/utils/clean_up_utils.c \
 	src/utils/exit.c \
 	src/utils/mlx_utils.c \
 	src/utils/is_empty_line.c
@@ -88,7 +89,6 @@ linux: $(LIBFT_LIB) $(MLX_LINUX_LIB) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS)
 clean:
 	make clean -C $(LIBFT_DIR)
 	make clean -C $(MLX_DIR)
-	make clean -C $(MLX_LINUX_DIR)
 	$(RM) $(OBJS) $(OBJS_MAIN) $(GNL_OBJS)
 
 fclean: clean

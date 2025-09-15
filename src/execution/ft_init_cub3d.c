@@ -6,7 +6,7 @@
 /*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:55:55 by mohkhan           #+#    #+#             */
-/*   Updated: 2025/09/15 12:05:35 by mohkhan          ###   ########.fr       */
+/*   Updated: 2025/09/15 18:00:35 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,23 @@ int	rgb_to_hex(int r, int g, int b)
 	return ((r << 16) | (g << 8) | b);
 }
 
-/*Initializing Textures*/
-void	load_texture(t_execution *cub3d, t_texture *texture, char *path)
+void	setup_texture_data(t_execution *cub3d, t_texture *texture,
+						char *path, t_src *src)
 {
-	printf("Attempting to load texture: %s\n", path);
+	texture->data = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
+			&texture->line_length, &texture->endian);
+	if (!texture->data)
+	{
+		printf("Error: Failed to get texture data for: %s\n", path);
+		cleanup_all_phases(src, cub3d);
+		exit_failure("Failed to get texture data", src);
+	}
+}
+
+/*Initializing Textures*/
+void	load_texture(t_execution *cub3d, t_texture *texture,
+		char *path, t_src *src)
+{
 	texture->img = NULL;
 	texture->data = NULL;
 	texture->width = 0;
@@ -30,29 +43,19 @@ void	load_texture(t_execution *cub3d, t_texture *texture, char *path)
 			&texture->width, &texture->height);
 	if (!texture->img)
 	{
-		printf("Warning: Failed to load texture: %s\n", path);
-		return ;
+		printf("Error: Failed to load texture: %s\n", path);
+		cleanup_all_phases(src, cub3d);
+		exit_failure("Failed to load texture", src);
 	}
-	printf("Successfully loaded texture: %s (Size: %dx%d)\n", path,
-		texture->width, texture->height);
-	texture->data = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
-			&texture->line_length, &texture->endian);
-	if (!texture->data)
-	{
-		printf("Warning: Failed to get texture data for: %s\n", path);
-		texture->img = NULL;
-		return ;
-	}
+	setup_texture_data(cub3d, texture, path, src);
 }
 
 void	load_all_textures(t_execution *cub3d, t_src *src)
 {
-	printf("Loading textures...\n");
-	load_texture(cub3d, &cub3d->north_texture, src->textures.north);
-	load_texture(cub3d, &cub3d->south_texture, src->textures.south);
-	load_texture(cub3d, &cub3d->west_texture, src->textures.west);
-	load_texture(cub3d, &cub3d->east_texture, src->textures.east);
-	printf("Texture loading completed!\n");
+	load_texture(cub3d, &cub3d->north_texture, src->textures.north, src);
+	load_texture(cub3d, &cub3d->south_texture, src->textures.south, src);
+	load_texture(cub3d, &cub3d->west_texture, src->textures.west, src);
+	load_texture(cub3d, &cub3d->east_texture, src->textures.east, src);
 }
 
 void	ft_init_cub3d(t_execution *cub3d, t_src *src)
@@ -62,7 +65,6 @@ void	ft_init_cub3d(t_execution *cub3d, t_src *src)
 			src->colors.floor_b);
 	cub3d->ceiling_color = rgb_to_hex(src->colors.ceiling_r,
 			src->colors.ceiling_g, src->colors.ceiling_b);
-	printf("Initializing MLX...\n");
 	cub3d->mlx_data.mlx = mlx_init();
 	if (!cub3d->mlx_data.mlx)
 		exit_failure("Error initializing MLX", src);
