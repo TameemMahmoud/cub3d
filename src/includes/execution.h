@@ -6,7 +6,7 @@
 /*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:56:36 by mohkhan           #+#    #+#             */
-/*   Updated: 2025/09/15 11:02:16 by mohkhan          ###   ########.fr       */
+/*   Updated: 2025/09/15 12:05:13 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct execution
 
 //ft_execution.c
 void	execution(t_src *src);
-void	exit_failure(char *err_msg);
+// void	exit_failure(char *err_msg, t_src *src);
 float	distance(float x, float y);
 bool	touch(float px, float py, t_execution *execution);
 void	clear_image(t_execution *execution);

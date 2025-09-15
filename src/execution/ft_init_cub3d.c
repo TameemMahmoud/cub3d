@@ -6,7 +6,7 @@
 /*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:55:55 by mohkhan           #+#    #+#             */
-/*   Updated: 2025/09/14 20:50:34 by mohkhan          ###   ########.fr       */
+/*   Updated: 2025/09/15 12:05:35 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,18 @@ void	ft_init_cub3d(t_execution *cub3d, t_src *src)
 	printf("Initializing MLX...\n");
 	cub3d->mlx_data.mlx = mlx_init();
 	if (!cub3d->mlx_data.mlx)
-		exit_failure("Error initializing MLX");
+		exit_failure("Error initializing MLX", src);
 	cub3d->mlx_data.win = mlx_new_window(cub3d->mlx_data.mlx, WIDTH,
 			HEIGHT, "Cub3D");
 	if (!cub3d->mlx_data.win)
-		exit_failure("Error creating window");
+		exit_failure("Error creating window", src);
 	cub3d->mlx_data.img = mlx_new_image(cub3d->mlx_data.mlx, WIDTH, HEIGHT);
 	if (!cub3d->mlx_data.img)
-		exit_failure("Error creating image");
+		exit_failure("Error creating image", src);
 	cub3d->mlx_data.pixels_ptr = mlx_get_data_addr(cub3d->mlx_data.img,
 			&cub3d->mlx_data.bits_per_pixel,
 			&cub3d->mlx_data.line_length, &cub3d->mlx_data.endian);
 	if (!cub3d->mlx_data.pixels_ptr)
-		exit_failure("Error getting image data address");
+		exit_failure("Error getting image data address", src);
 	load_all_textures(cub3d, src);
 }
