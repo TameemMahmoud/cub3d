@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_map_chars.c                               :+:      :+:    :+:   */
+/*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/07 21:12:24 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/09/14 22:36:55 by tmahmoud         ###   ########.fr       */
+/*   Created: 2025/09/08 21:07:53 by tmahmoud          #+#    #+#             */
+/*   Updated: 2025/09/14 22:56:07 by tmahmoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int	is_valid_map_char(char c)
-{
-	return (c == '0' || c == '1' || c == 'N'
-		|| c == 'S' || c == 'E' || c == 'W' || c == ' ');
-}
-
-void	validate_map_chars(t_src *src, char **map_lines, int height)
+static void	free_map_lines(char **map_lines, int height)
 {
 	int	i;
-	int	j;
 
+	if (!map_lines)
+		return ;
 	i = 0;
-	while (i < height)
+	while (i < height && map_lines[i])
 	{
-		j = 0;
-		while (map_lines[i][j])
-		{
-			if (!is_valid_map_char(map_lines[i][j]))
-				exit_failure_clear_lines(src, "Error\nInvalid character in map",
-					map_lines, height);
-			j++;
-		}
+		free(map_lines[i]);
+		map_lines[i] = NULL;
 		i++;
 	}
+	free(map_lines);
+}
+
+void	exit_failure_clear_lines(t_src *src, char *err_msg,
+	char **map_lines, int height)
+{
+	free_map_lines(map_lines, height);
+	exit_failure_clear(src, err_msg);
 }

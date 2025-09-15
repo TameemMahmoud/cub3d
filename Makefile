@@ -7,9 +7,9 @@ RM = rm -f
 LIBFT_DIR = src/includes/libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-MLX_DIR = src/includes/mlx
-MLX_LIB = $(MLX_DIR)/libmlx.a
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+# MLX_DIR = src/includes/mlx
+# MLX_LIB = $(MLX_DIR)/libmlx.a
+# MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 MLX_LINUX_DIR = src/includes/mlx_linux
 MLX_LINUX_LIB = $(MLX_LINUX_DIR)/libmlx.a

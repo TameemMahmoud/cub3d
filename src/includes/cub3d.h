@@ -6,7 +6,7 @@
 /*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 20:49:36 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/08/07 21:20:41 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/14 19:40:18 by tmahmoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,19 @@ void	cleanup_all(t_src *src);
 void	parse_map(t_src *src);
 int		is_empty_line(char *line);
 void	parse_texture(t_src *src, char *line);
+int		check_duplicate_texture(t_src *src, char *id);
+char	*get_duplicate_error_msg(char *id);
 void	parse_color(t_src *src, char *line);
+int		validate_color_values(char **rgb);
+int		check_duplicate_color(t_src *src, char *id);
+void	store_color_values(t_src *src, char *id, char **rgb);
+void	free_split(char **split);
+void	handle_duplicate_error(t_src *src, char *id, char *color);
+void	handle_format_error(t_src *src, char *id, char *color, char **rgb);
 void	extract_map_lines(t_src *src, char ***map_lines, int *height);
 void	allocate_map_structure(t_src *src);
 void	validate_map_chars(t_src *src, char **map_lines, int height);
 void	find_player(t_src *src, char **map_lines, int height);
+void	exit_failure_clear_lines(t_src *src, char *err_msg,
+			char **map_lines, int height);
 #endif
