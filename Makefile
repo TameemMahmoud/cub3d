@@ -40,7 +40,7 @@ SRC_EXECUTION = src/execution/ft_execution.c \
 	src/execution/ft_init_player.c \
 	src/execution/ft_init_cub3d.c \
 	src/execution/ft_textures.c \
-	src/execution/ft_calculation.c 
+	src/execution/ft_calculation.c
 
 SRC_UTILS = src/utils/init.c \
 	src/utils/clean_up.c \

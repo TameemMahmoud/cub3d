@@ -6,7 +6,7 @@
 /*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:55:52 by mohkhan           #+#    #+#             */
-/*   Updated: 2025/09/10 11:55:53 by mohkhan          ###   ########.fr       */
+/*   Updated: 2025/09/14 20:50:12 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ float	distance(float x, float y)
 
 int	close_window(t_execution *execution)
 {
-	mlx_destroy_window(execution->mlx_data.mlx, execution->mlx_data.win);
+	if (execution && execution->mlx_data.mlx)
+		if (execution->mlx_data.win)
+			mlx_destroy_window(execution->mlx_data.mlx,
+				execution->mlx_data.win);
 	exit(0);
 	return (0);
 }
@@ -59,6 +62,7 @@ void	execution(t_src *src)
 {
 	t_execution	cub3d;
 
+	ft_memset(&cub3d, 0, sizeof(t_execution));
 	ft_init_cub3d(&cub3d, src);
 	ft_init_player(&cub3d.player, src);
 	mlx_hook(cub3d.mlx_data.win, 2, 1L << 0, key_press, &cub3d.player);
@@ -66,4 +70,5 @@ void	execution(t_src *src)
 	mlx_hook(cub3d.mlx_data.win, 17, 1L << 17, close_window, &cub3d);
 	mlx_loop_hook(cub3d.mlx_data.mlx, draw_a_loop, &cub3d);
 	mlx_loop(cub3d.mlx_data.mlx);
+	cleanup_all_phases(src, &cub3d);
 }

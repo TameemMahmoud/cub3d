@@ -6,7 +6,7 @@
 /*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:55:55 by mohkhan           #+#    #+#             */
-/*   Updated: 2025/09/10 11:55:56 by mohkhan          ###   ########.fr       */
+/*   Updated: 2025/09/14 20:50:34 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	load_texture(t_execution *cub3d, t_texture *texture, char *path)
 		printf("Warning: Failed to load texture: %s\n", path);
 		return ;
 	}
-	printf("Successfully loaded texture: %s (Size: %dx%d)\n", path, texture->width, texture->height);
+	printf("Successfully loaded texture: %s (Size: %dx%d)\n", path,
+		texture->width, texture->height);
 	texture->data = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
 			&texture->line_length, &texture->endian);
 	if (!texture->data)

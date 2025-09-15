@@ -6,7 +6,7 @@
 /*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:56:36 by mohkhan           #+#    #+#             */
-/*   Updated: 2025/09/10 12:16:56 by mohkhan          ###   ########.fr       */
+/*   Updated: 2025/09/15 11:02:16 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,10 @@ void	draw_textured_wall(t_execution *execution, int column, int direction);
 
 //mlx_utils.c
 void	my_mlx_pixel_put(int x, int y, t_execution *execution, int color);
+
+//clean_up.c
+void	cleanup_all_phases(t_src *src, t_execution *execution);
+void	cleanup_all(t_src *src);
+void	exit_execution(t_src *src, t_execution *execution, char *err_msg);
 
 #endif

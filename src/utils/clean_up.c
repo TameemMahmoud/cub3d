@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:30:35 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/08/11 14:00:16 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/14 20:51:12 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "execution.h"
 
 static void	free_textures(t_textures *textures)
 {
@@ -110,5 +111,24 @@ void	cleanup_all(t_src *src)
 }
 
 /*
-in clean up function call cleanup_mlx at the end of the function
+** Integrated cleanup for both parsing and execution phases
 */
+void	cleanup_all_phases(t_src *src, t_execution *execution)
+{
+	if (execution)
+	{
+		if (execution->north_texture.img && execution->mlx_data.mlx)
+			mlx_destroy_image(execution->mlx_data.mlx, execution->north_texture.img);
+		if (execution->south_texture.img && execution->mlx_data.mlx)
+			mlx_destroy_image(execution->mlx_data.mlx, execution->south_texture.img);
+		if (execution->east_texture.img && execution->mlx_data.mlx)
+			mlx_destroy_image(execution->mlx_data.mlx, execution->east_texture.img);
+		if (execution->west_texture.img && execution->mlx_data.mlx)
+			mlx_destroy_image(execution->mlx_data.mlx, execution->west_texture.img);
+		if (execution->mlx_data.img && execution->mlx_data.mlx)
+			mlx_destroy_image(execution->mlx_data.mlx, execution->mlx_data.img);
+		if (execution->mlx_data.win && execution->mlx_data.mlx)
+			mlx_destroy_window(execution->mlx_data.mlx, execution->mlx_data.win);
+	}
+	cleanup_all(src);
+}
