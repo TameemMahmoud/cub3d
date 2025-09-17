@@ -149,5 +149,5 @@ This project is part of the 42 School curriculum and is for educational purposes
 ## 📚 Resources
 
 - [Wolfenstein 3D's source code](https://github.com/id-Software/wolf3d)
-- [Ray-Casting Tutorial](https://lodev.org/cgtutor/raycasting.html)
+- [Ray-Casting Tutorial](https://www.youtube.com/watch?v=G9i78WoBBIU&t=1s)
 - [42 Documentation](https://cdn.intra.42.fr/pdf/pdf/143464/en.subject.pdf)
