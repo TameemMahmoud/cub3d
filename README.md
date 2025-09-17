@@ -21,7 +21,8 @@ Cub3D is a simple 3D ray-casting engine inspired by the legendary Wolfenstein 3D
 ## 🖥️ Screenshots
 
 <div align="center">
-  <p>Place screenshots of your Cub3D in action here</p>
+  <p><img width="1281" height="719" alt="image" src="https://github.com/user-attachments/assets/6faa696c-779b-4054-a6ca-dfded988fcb5" /></p>
+  <p><img width="1282" height="718" alt="image" src="https://github.com/user-attachments/assets/363459dd-e102-4e21-ab4a-a868b0723d82" /></p>
 </div>
 
 ## 🛠️ Technology
