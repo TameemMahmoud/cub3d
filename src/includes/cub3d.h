@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 20:49:36 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/09/14 19:40:18 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 12:04:07 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
 # include <stdio.h>
+# include <stdlib.h>
+# include <stdbool.h>
 # include "mlx/mlx.h"
+# include <string.h>
 # include <math.h>
 
 // ---------- const strings--------------
@@ -76,7 +79,7 @@ void	init(t_src *src);
 void	parsing(t_src *src, char *input_file);
 void	parse_config_elements(t_src *src);
 void	exit_failure_clear(t_src *src, char *err_msg);
-void	exit_failure(char *err_msg);
+void	exit_failure(char *err_msg, t_src *src);
 void	exit_success_clear(t_src *src);
 void	cleanup_all(t_src *src);
 void	parse_map(t_src *src);

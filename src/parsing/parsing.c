@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:39:41 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/09/14 19:43:33 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:59:58 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
-
-void	print_parsing_summary(t_src *src)
-{
-	int	i;
-
-	printf("=== PARSING SUMMARY ===\n");
-	printf("Textures:\n");
-	printf("  North: %s\n", src->textures.north);
-	printf("  South: %s\n", src->textures.south);
-	printf("  West:  %s\n", src->textures.west);
-	printf("  East:  %s\n", src->textures.east);
-	printf("\nColors:\n");
-	printf("  Floor:   R=%d, G=%d, B=%d\n",
-		src->colors.floor_r, src->colors.floor_g, src->colors.floor_b);
-	printf("  Ceiling: R=%d, G=%d, B=%d\n",
-		src->colors.ceiling_r, src->colors.ceiling_g, src->colors.ceiling_b);
-	printf("\nMap:\n");
-	printf("  Dimensions: %dx%d\n", src->map->width, src->map->height);
-	printf("  Player: (%d, %d) facing %c\n",
-		src->map->player_x, src->map->player_y, src->map->player_dir);
-	printf("  Map grid:\n");
-	i = 0;
-	while (i < src->map->height)
-	{
-		printf("    %s\n", src->map->grid[i]);
-		i++;
-	}
-	printf("======================\n\n");
-}
+#include "cub3d.h"
 
 static void	file_len(t_src *src, char *input_file)
 {
@@ -96,5 +67,4 @@ void	parsing(t_src *src, char *input_file)
 	file_creation(src, file, input_file);
 	parse_config_elements(src);
 	parse_map(src);
-	print_parsing_summary(src);
 }

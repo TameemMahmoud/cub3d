@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   find_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 21:16:49 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/09/14 22:43:31 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:45:20 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 static int	is_player_char(char c)
 {

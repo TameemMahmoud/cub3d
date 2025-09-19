@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validate_elements.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:49:17 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/08/07 20:50:24 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:46:23 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 static int	is_texture_identifier(char *line)
 {

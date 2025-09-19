@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   color_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:08:50 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/09/08 18:09:00 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:46:23 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 static int	is_valid_rgb_range(int value)
 {

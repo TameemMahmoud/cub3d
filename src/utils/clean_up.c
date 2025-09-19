@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:30:35 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/09/14 19:38:24 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:49:58 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
+#include "execution.h"
 
 static void	free_textures(t_textures *textures)
 {
@@ -84,21 +85,6 @@ static void	free_map(t_map *map)
 	free(map);
 }
 
-// static void	cleanup_mlx(t_src *src)
-// {
-// 	if (src->win_ptr)
-// 	{
-// 		mlx_destroy_window(src->mlx_ptr, src->win_ptr);
-// 		src->win_ptr = NULL;
-// 	}
-// 	if (src->mlx_ptr)
-// 	{
-// 		mlx_destroy_display(src->mlx_ptr);
-// 		free(src->mlx_ptr);
-// 		src->mlx_ptr = NULL;
-// 	}
-// }
-
 void	cleanup_all(t_src *src)
 {
 	if (!src)
@@ -108,7 +94,3 @@ void	cleanup_all(t_src *src)
 	free_map(src->map);
 	src->map = NULL;
 }
-
-/*
-in clean up function call cleanup_mlx at the end of the function
-*/

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
-#include "includes/libft/libft.h"
+#include "cub3d.h"
+#include "execution.h"
 
 void	cub3d(char *file)
 {
@@ -26,4 +26,5 @@ void	cub3d(char *file)
 	}
 	init(&src);
 	parsing(&src, file);
+	execution(&src);
 }

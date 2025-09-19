@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   extract_map_lines.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 20:59:11 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/09/14 22:58:49 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:45:16 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 static int	count_map_lines(t_src *src)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   color_storage.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:09:32 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/09/08 18:09:37 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:45:42 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 static void	store_floor_color(t_src *src, int r, int g, int b)
 {

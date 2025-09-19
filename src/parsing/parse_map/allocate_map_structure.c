@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   allocate_map_structure.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 20:56:58 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/08/07 21:01:57 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:45:07 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 void	allocate_map_structure(t_src *src)
 {

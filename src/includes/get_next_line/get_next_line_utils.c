@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmahmoud <tmahmoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohkhan <mohkhan@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:41:21 by tmahmoud          #+#    #+#             */
-/*   Updated: 2025/07/26 17:14:42 by tmahmoud         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:02:28 by mohkhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	res[total_len] = 0;
 	return (res);
 }
-
-
-
-
